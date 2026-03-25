@@ -31,7 +31,7 @@ export default function Arcade() {
     setProgress(0);
   };
 
-  // Simulated loading progress
+
   useEffect(() => {
     if (phase !== "loading") return;
 
@@ -51,7 +51,7 @@ export default function Arcade() {
     return () => clearInterval(interval);
   }, [phase]);
 
-  // Rotate loading tips
+
   useEffect(() => {
     if (phase !== "loading") return;
     const interval = setInterval(() => {
@@ -60,7 +60,6 @@ export default function Arcade() {
     return () => clearInterval(interval);
   }, [phase]);
 
-  // Random glitch effect
   useEffect(() => {
     if (phase !== "loading") return;
     const interval = setInterval(() => {
@@ -70,7 +69,7 @@ export default function Arcade() {
     return () => clearInterval(interval);
   }, [phase]);
 
-  // Focus iframe when playing so keyboard events work
+
   useEffect(() => {
     if (phase === "playing" && iframeRef.current) {
       iframeRef.current.focus();
@@ -146,7 +145,6 @@ export default function Arcade() {
         }
       `}</style>
 
-      {/* LOADING / READY SCREEN */}
       {phase !== "playing" && (
         <div
           className="absolute inset-0 flex flex-col items-center justify-center z-10 scanline-overlay"
@@ -157,7 +155,6 @@ export default function Arcade() {
         >
           <div className="scanline-beam" />
 
-          {/* Title */}
           <div
             className="mb-8 text-center"
             style={{
@@ -184,10 +181,10 @@ export default function Arcade() {
             </p>
           </div>
 
-          {/* Loading Bar */}
+
           {phase === "loading" && (
             <div className="w-72 mb-6" style={{ animation: "fade-in-up 0.5s ease-out" }}>
-              {/* Bar container */}
+
               <div
                 className="relative h-4 rounded-full overflow-hidden"
                 style={{
@@ -195,7 +192,7 @@ export default function Arcade() {
                   border: "1px solid rgba(139, 92, 246, 0.2)",
                 }}
               >
-                {/* Fill */}
+
                 <div
                   className="h-full rounded-full transition-all duration-200 ease-out relative"
                   style={{
@@ -204,7 +201,7 @@ export default function Arcade() {
                     boxShadow: "0 0 16px rgba(139, 92, 246, 0.5)",
                   }}
                 >
-                  {/* Shine effect */}
+
                   <div
                     className="absolute top-0 h-full w-[40%] rounded-full"
                     style={{
@@ -215,7 +212,7 @@ export default function Arcade() {
                 </div>
               </div>
 
-              {/* Percentage */}
+
               <div className="flex justify-between mt-2">
                 <span className="text-[10px] font-mono text-zinc-600">
                   {LOADING_TIPS[tipIndex]}
@@ -227,7 +224,6 @@ export default function Arcade() {
             </div>
           )}
 
-          {/* "PRESS START" button */}
           {phase === "ready" && (
             <div style={{ animation: "boot-in 0.5s ease-out" }}>
               <button
@@ -253,7 +249,7 @@ export default function Arcade() {
                 ▶ START GAME
               </button>
 
-              {/* Controls hint */}
+
               <div className="mt-8 flex gap-8 justify-center">
                 <div className="text-center">
                   <p className="text-[9px] text-violet-400 font-bold tracking-widest uppercase mb-2">Player 1</p>
@@ -289,14 +285,14 @@ export default function Arcade() {
             </div>
           )}
 
-          {/* Decorative dots */}
+
           <div className="absolute bottom-4 flex gap-1">
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
                 className="w-1 h-1 rounded-full"
                 style={{
-                  background: i === (Math.floor(Date.now() / 600) % 3) ? "#8b5cf6" : "rgba(255,255,255,0.1)",
+                  background: i === (tipIndex % 3) ? "#8b5cf6" : "rgba(255,255,255,0.1)",
                 }}
               />
             ))}
@@ -304,10 +300,9 @@ export default function Arcade() {
         </div>
       )}
 
-      {/* GAME IFRAME + TOOLBAR */}
       {phase === "playing" && (
         <>
-          {/* Floating toolbar */}
+
           <div
             className="absolute top-2 right-2 z-20 flex gap-1"
             style={{ animation: "fade-in-up 0.4s ease-out" }}
