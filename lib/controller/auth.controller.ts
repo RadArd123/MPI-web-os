@@ -76,7 +76,7 @@ export const AuthController = {
       return NextResponse.json({ error: "Failed to logout" }, { status: 500 });
     }
   },
-  getSession: async (req: Request) => {
+  getSession: async (_req: Request) => {
     try {
       const cookieStore = await cookies();
       const token = cookieStore.get("stellar_session")?.value;
@@ -92,7 +92,7 @@ export const AuthController = {
       }
 
       return NextResponse.json({ user: payload }, { status: 200 });
-    } catch (error) {
+    } catch (_error) {
       return NextResponse.json({ error: "SESSION_ERROR" }, { status: 500 });
     }
   },

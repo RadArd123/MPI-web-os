@@ -5,7 +5,15 @@ import dynamic from "next/dynamic";
 
 const Globe = dynamic(() => import("react-globe.gl"), { ssr: false });
 
-const activeUsers = [
+interface ActiveUser {
+  lat: number;
+  lng: number;
+  size: number;
+  color: string;
+  name: string;
+}
+
+const activeUsers: ActiveUser[] = [
   { lat: 45.6, lng: 25.6, size: 0.5, color: "#22d3ee", name: "Tu: Caut Wi-Fi" },
 
   {
@@ -34,6 +42,7 @@ const activeUsers = [
 ];
 
 export default function SpaceGlobe() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const globeEl = useRef<any>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -66,7 +75,7 @@ export default function SpaceGlobe() {
       globeEl.current.pointOfView(
         { altitude: 2.2, lat: 45.6, lng: 25.6 },
         2000,
-      ); // Focus pe România la load
+      );
     }
   }, [dimensions]);
 
@@ -75,24 +84,23 @@ export default function SpaceGlobe() {
       ref={containerRef}
       className="w-full h-full rounded-3xl overflow-hidden relative bg-transparent flex items-center justify-center"
     >
-   <Globe
+      <Globe
         ref={globeEl}
         width={dimensions.width}
         height={dimensions.height}
         backgroundColor="rgba(0,0,0,0)"
-        
-        // AICI E MODIFICAREA: Folosim textura de zi în loc de cea de noapte
+
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
         bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
-        
-        // Randăm Labels în loc de Puncte simple pentru a vedea statusul
+
+
         labelsData={activeUsers}
-        labelLat={(d) => (d as any).lat}
-        labelLng={(d) => (d as any).lng}
-        labelText={(d) => (d as any).name}
+        labelLat={(d) => (d as ActiveUser).lat}
+        labelLng={(d) => (d as ActiveUser).lng}
+        labelText={(d) => (d as ActiveUser).name}
         labelSize={1.5}
         labelDotRadius={0.5}
-        labelColor={(d) => (d as any).color}
+        labelColor={(d) => (d as ActiveUser).color}
         labelResolution={2}
         showAtmosphere={true}
         atmosphereColor="#0ea5e9"

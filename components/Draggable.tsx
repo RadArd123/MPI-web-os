@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 
 interface DraggableProps {
   children: React.ReactNode;
-  targetRef: React.RefObject<HTMLDivElement | null>; // Referința către întreaga fereastră
+  targetRef: React.RefObject<HTMLDivElement | null>;
   onDragEnd: (x: number, y: number) => void;
   initialPos: { x: number; y: number };
   className?: string;
@@ -18,14 +18,13 @@ export function Draggable({ children, targetRef, onDragEnd, initialPos, classNam
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (disabled || e.button !== 0) return;
-    
+
     isDragging.current = true;
     startMousePos.current = { x: e.clientX, y: e.clientY };
 
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
-    
-    // Feedback vizual: schimbăm cursorul pe tot ecranul ca să nu "scape"
+
     document.body.style.cursor = 'grabbing';
     document.body.style.userSelect = 'none';
   };
@@ -39,7 +38,6 @@ export function Draggable({ children, targetRef, onDragEnd, initialPos, classNam
     const newX = offset.current.x + dx;
     const newY = offset.current.y + dy;
 
-    // OPTIMIZARE CRITICĂ: Modificăm transform-ul direct în DOM, fără setState
     targetRef.current.style.transform = `translate(${newX}px, ${newY}px)`;
   };
 
@@ -48,20 +46,22 @@ export function Draggable({ children, targetRef, onDragEnd, initialPos, classNam
 
     const dx = e.clientX - startMousePos.current.x;
     const dy = e.clientY - startMousePos.current.y;
-    
-    offset.current = { 
-      x: offset.current.x + dx, 
-      y: offset.current.y + dy 
+
+    offset.current = {
+      x: offset.current.x + dx,
+      y: offset.current.y + dy
     };
 
     isDragging.current = false;
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
-    
+
+
     document.body.style.cursor = '';
+
     document.body.style.userSelect = '';
 
-    // Salvăm poziția finală în store/state doar la final
+
     onDragEnd(offset.current.x, offset.current.y);
   };
 

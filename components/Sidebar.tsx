@@ -9,7 +9,6 @@ import {
   Settings,
   FolderClosed,
   Activity,
-  LogOut,
   LucideIcon,
 } from "lucide-react";
 import { useWindowStore } from "@/store/useWindowStore";
@@ -31,7 +30,7 @@ export default function Sidebar({ onLogout }: { onLogout: () => void }) {
     <aside
       className={`relative z-50 flex flex-col bg-black/60 backdrop-blur-xl border-r border-gray-800 transition-all duration-300 ${isSidebarOpen ? "w-64" : "w-20"}`}
     >
-      {/* Brand Header */}
+
       <div className="h-16 flex items-center justify-between px-4 border-b border-gray-800">
         {isSidebarOpen && (
           <div className="flex items-center gap-2 overflow-hidden">

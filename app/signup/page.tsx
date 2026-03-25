@@ -34,7 +34,7 @@ export default function SignupPage() {
       return;
     }
 
-    const { confirmPassword, ...payload } = formData;
+    const { confirmPassword: _confirmPassword, ...payload } = formData;
     const result = await signup(payload);
 
     if (result.success) {

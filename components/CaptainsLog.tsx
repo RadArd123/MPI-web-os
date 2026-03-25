@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Save, Trash2, X, Code, Copy } from 'lucide-react';
+import { Save, Trash2, X, Copy } from 'lucide-react';
 import { useSnippetStore } from '@/store/snippetStore';
 import { useAuthStore } from '@/store/authStore';
 import type { Snippet } from '@/types/snippet.types';
@@ -71,7 +71,7 @@ export default function CaptainsLog() {
               <button 
                 onClick={(e) => {
                   e.stopPropagation(); 
-                  user?.id && removeSnippet(s.id, user.id);
+                  if (user?.id) removeSnippet(s.id, user.id);
                 }}
                 className="opacity-0 group-hover:opacity-100 p-1 hover:text-red-500 transition-all"
               >

@@ -13,8 +13,8 @@ export const useSnippetStore = create<SnippetState>((set, get) => ({
       if (!res.ok) throw new Error("Nu am putut încărca datele.");
       const data = await res.json();
       set({ snippets: data });
-    } catch (err: any) {
-      set({ error: err.message });
+    } catch (err: unknown) {
+      set({ error: err instanceof Error ? err.message : "Unknown error" });
     } finally {
       set({ isLoading: false });
     }
@@ -29,7 +29,7 @@ export const useSnippetStore = create<SnippetState>((set, get) => ({
       });
       if (res.ok) {
         const saved = await res.json();
-        // Adăugăm noul snippet la începutul listei (Imutabilitate)
+
         set({ snippets: [saved, ...get().snippets] });
       }
     } catch (err) {
