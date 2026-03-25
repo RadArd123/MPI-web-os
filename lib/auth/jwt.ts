@@ -6,7 +6,7 @@ const SECRET = new TextEncoder().encode(
 );
 
 export const JWTUtils = {
-  generateToken: async (payload: any) => {
+  generateToken: async (payload: Record<string, unknown>) => {
     return await new SignJWT(payload)
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()

@@ -19,7 +19,7 @@ export async function proxy(req: NextRequest) {
         await jwtVerify(token, SECRET);
    
         return NextResponse.redirect(new URL("/", req.url));
-      } catch (e) {
+      } catch (_e) {
 
         return NextResponse.next();
       }
@@ -35,7 +35,7 @@ export async function proxy(req: NextRequest) {
   try {
     await jwtVerify(token, SECRET);
     return NextResponse.next();
-  } catch (error) {
+  } catch (_error) {
 
     const response = NextResponse.redirect(new URL("/login", req.url));
     response.cookies.delete("stellar_session"); 
