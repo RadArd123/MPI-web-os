@@ -41,7 +41,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       if (response.ok) {
         set({ user: data.user, isAuthenticated: true });
-        return { success: true };
+       return { success: true, user: data.user };
       }
 
       return { success: false, error: data.error || "ACCESS_DENIED" };

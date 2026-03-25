@@ -37,7 +37,7 @@ export const AuthService = {
         if (!isMatch) {
             return null;
         }
-        const userData={email: user.email, operatorName: user.profile?.operatorName};
+        const userData={id: user.id, email: user.email, operatorName: user.profile?.operatorName};
         return userData;
     }
 
