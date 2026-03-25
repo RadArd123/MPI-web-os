@@ -13,6 +13,8 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     "generated/**",
+    // Third-party game files
+    "public/games/**",
   ]),
   {
     rules: {
