@@ -19,6 +19,7 @@ export const AuthController = {
       const user = await AuthService.createUser(email, password, operatorName);
 
       const token = await JWTUtils.generateToken({
+        id: user.id,
         email: user.email,
         name: operatorName,
       });

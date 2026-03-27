@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useWindowStore } from '@/store/useWindowStore';
+import { useWindowStore } from '@/store/windowStore';
 
-// Reset the store before each test
 beforeEach(() => {
   useWindowStore.setState({ windows: [], activeWindowId: null });
 });
@@ -27,7 +26,7 @@ describe('useWindowStore', () => {
       const { openWindow } = useWindowStore.getState();
       openWindow('terminal', 'Terminal');
       openWindow('browser', 'Browser');
-      openWindow('terminal', 'Terminal'); // duplicate
+      openWindow('terminal', 'Terminal');
 
       const { windows, activeWindowId } = useWindowStore.getState();
       expect(windows).toHaveLength(2);

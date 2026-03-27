@@ -28,6 +28,28 @@ export type Profile = $Result.DefaultSelection<Prisma.$ProfilePayload>
  * 
  */
 export type Snippet = $Result.DefaultSelection<Prisma.$SnippetPayload>
+/**
+ * Model FileSystemItem
+ * 
+ */
+export type FileSystemItem = $Result.DefaultSelection<Prisma.$FileSystemItemPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const ItemType: {
+  FILE: 'FILE',
+  FOLDER: 'FOLDER'
+};
+
+export type ItemType = (typeof ItemType)[keyof typeof ItemType]
+
+}
+
+export type ItemType = $Enums.ItemType
+
+export const ItemType: typeof $Enums.ItemType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -179,6 +201,16 @@ export class PrismaClient<
     * ```
     */
   get snippet(): Prisma.SnippetDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.fileSystemItem`: Exposes CRUD operations for the **FileSystemItem** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FileSystemItems
+    * const fileSystemItems = await prisma.fileSystemItem.findMany()
+    * ```
+    */
+  get fileSystemItem(): Prisma.FileSystemItemDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -615,7 +647,8 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Profile: 'Profile',
-    Snippet: 'Snippet'
+    Snippet: 'Snippet',
+    FileSystemItem: 'FileSystemItem'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -631,7 +664,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "profile" | "snippet"
+      modelProps: "user" | "profile" | "snippet" | "fileSystemItem"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -857,6 +890,80 @@ export namespace Prisma {
           }
         }
       }
+      FileSystemItem: {
+        payload: Prisma.$FileSystemItemPayload<ExtArgs>
+        fields: Prisma.FileSystemItemFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FileSystemItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileSystemItemPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FileSystemItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileSystemItemPayload>
+          }
+          findFirst: {
+            args: Prisma.FileSystemItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileSystemItemPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FileSystemItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileSystemItemPayload>
+          }
+          findMany: {
+            args: Prisma.FileSystemItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileSystemItemPayload>[]
+          }
+          create: {
+            args: Prisma.FileSystemItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileSystemItemPayload>
+          }
+          createMany: {
+            args: Prisma.FileSystemItemCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FileSystemItemCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileSystemItemPayload>[]
+          }
+          delete: {
+            args: Prisma.FileSystemItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileSystemItemPayload>
+          }
+          update: {
+            args: Prisma.FileSystemItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileSystemItemPayload>
+          }
+          deleteMany: {
+            args: Prisma.FileSystemItemDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FileSystemItemUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FileSystemItemUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileSystemItemPayload>[]
+          }
+          upsert: {
+            args: Prisma.FileSystemItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileSystemItemPayload>
+          }
+          aggregate: {
+            args: Prisma.FileSystemItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFileSystemItem>
+          }
+          groupBy: {
+            args: Prisma.FileSystemItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FileSystemItemGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FileSystemItemCountArgs<ExtArgs>
+            result: $Utils.Optional<FileSystemItemCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -968,6 +1075,7 @@ export namespace Prisma {
     user?: UserOmit
     profile?: ProfileOmit
     snippet?: SnippetOmit
+    fileSystemItem?: FileSystemItemOmit
   }
 
   /* Types for Logging */
@@ -1049,10 +1157,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     snippets: number
+    files: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     snippets?: boolean | UserCountOutputTypeCountSnippetsArgs
+    files?: boolean | UserCountOutputTypeCountFilesArgs
   }
 
   // Custom InputTypes
@@ -1071,6 +1181,44 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountSnippetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SnippetWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountFilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FileSystemItemWhereInput
+  }
+
+
+  /**
+   * Count Type FileSystemItemCountOutputType
+   */
+
+  export type FileSystemItemCountOutputType = {
+    children: number
+  }
+
+  export type FileSystemItemCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    children?: boolean | FileSystemItemCountOutputTypeCountChildrenArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * FileSystemItemCountOutputType without action
+   */
+  export type FileSystemItemCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItemCountOutputType
+     */
+    select?: FileSystemItemCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * FileSystemItemCountOutputType without action
+   */
+  export type FileSystemItemCountOutputTypeCountChildrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FileSystemItemWhereInput
   }
 
 
@@ -1236,6 +1384,7 @@ export namespace Prisma {
     createdAt?: boolean
     profile?: boolean | User$profileArgs<ExtArgs>
     snippets?: boolean | User$snippetsArgs<ExtArgs>
+    files?: boolean | User$filesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1264,6 +1413,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     profile?: boolean | User$profileArgs<ExtArgs>
     snippets?: boolean | User$snippetsArgs<ExtArgs>
+    files?: boolean | User$filesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1274,6 +1424,7 @@ export namespace Prisma {
     objects: {
       profile: Prisma.$ProfilePayload<ExtArgs> | null
       snippets: Prisma.$SnippetPayload<ExtArgs>[]
+      files: Prisma.$FileSystemItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1676,6 +1827,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     profile<T extends User$profileArgs<ExtArgs> = {}>(args?: Subset<T, User$profileArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     snippets<T extends User$snippetsArgs<ExtArgs> = {}>(args?: Subset<T, User$snippetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SnippetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    files<T extends User$filesArgs<ExtArgs> = {}>(args?: Subset<T, User$filesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FileSystemItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2142,6 +2294,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SnippetScalarFieldEnum | SnippetScalarFieldEnum[]
+  }
+
+  /**
+   * User.files
+   */
+  export type User$filesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItem
+     */
+    select?: FileSystemItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileSystemItem
+     */
+    omit?: FileSystemItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileSystemItemInclude<ExtArgs> | null
+    where?: FileSystemItemWhereInput
+    orderBy?: FileSystemItemOrderByWithRelationInput | FileSystemItemOrderByWithRelationInput[]
+    cursor?: FileSystemItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FileSystemItemScalarFieldEnum | FileSystemItemScalarFieldEnum[]
   }
 
   /**
@@ -4277,6 +4453,1165 @@ export namespace Prisma {
 
 
   /**
+   * Model FileSystemItem
+   */
+
+  export type AggregateFileSystemItem = {
+    _count: FileSystemItemCountAggregateOutputType | null
+    _min: FileSystemItemMinAggregateOutputType | null
+    _max: FileSystemItemMaxAggregateOutputType | null
+  }
+
+  export type FileSystemItemMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    type: $Enums.ItemType | null
+    content: string | null
+    userId: string | null
+    parentId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FileSystemItemMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    type: $Enums.ItemType | null
+    content: string | null
+    userId: string | null
+    parentId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FileSystemItemCountAggregateOutputType = {
+    id: number
+    name: number
+    type: number
+    content: number
+    userId: number
+    parentId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FileSystemItemMinAggregateInputType = {
+    id?: true
+    name?: true
+    type?: true
+    content?: true
+    userId?: true
+    parentId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FileSystemItemMaxAggregateInputType = {
+    id?: true
+    name?: true
+    type?: true
+    content?: true
+    userId?: true
+    parentId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FileSystemItemCountAggregateInputType = {
+    id?: true
+    name?: true
+    type?: true
+    content?: true
+    userId?: true
+    parentId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FileSystemItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FileSystemItem to aggregate.
+     */
+    where?: FileSystemItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FileSystemItems to fetch.
+     */
+    orderBy?: FileSystemItemOrderByWithRelationInput | FileSystemItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FileSystemItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FileSystemItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FileSystemItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FileSystemItems
+    **/
+    _count?: true | FileSystemItemCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FileSystemItemMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FileSystemItemMaxAggregateInputType
+  }
+
+  export type GetFileSystemItemAggregateType<T extends FileSystemItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateFileSystemItem]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFileSystemItem[P]>
+      : GetScalarType<T[P], AggregateFileSystemItem[P]>
+  }
+
+
+
+
+  export type FileSystemItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FileSystemItemWhereInput
+    orderBy?: FileSystemItemOrderByWithAggregationInput | FileSystemItemOrderByWithAggregationInput[]
+    by: FileSystemItemScalarFieldEnum[] | FileSystemItemScalarFieldEnum
+    having?: FileSystemItemScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FileSystemItemCountAggregateInputType | true
+    _min?: FileSystemItemMinAggregateInputType
+    _max?: FileSystemItemMaxAggregateInputType
+  }
+
+  export type FileSystemItemGroupByOutputType = {
+    id: string
+    name: string
+    type: $Enums.ItemType
+    content: string | null
+    userId: string
+    parentId: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: FileSystemItemCountAggregateOutputType | null
+    _min: FileSystemItemMinAggregateOutputType | null
+    _max: FileSystemItemMaxAggregateOutputType | null
+  }
+
+  type GetFileSystemItemGroupByPayload<T extends FileSystemItemGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FileSystemItemGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FileSystemItemGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FileSystemItemGroupByOutputType[P]>
+            : GetScalarType<T[P], FileSystemItemGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FileSystemItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    type?: boolean
+    content?: boolean
+    userId?: boolean
+    parentId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    parent?: boolean | FileSystemItem$parentArgs<ExtArgs>
+    children?: boolean | FileSystemItem$childrenArgs<ExtArgs>
+    _count?: boolean | FileSystemItemCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["fileSystemItem"]>
+
+  export type FileSystemItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    type?: boolean
+    content?: boolean
+    userId?: boolean
+    parentId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    parent?: boolean | FileSystemItem$parentArgs<ExtArgs>
+  }, ExtArgs["result"]["fileSystemItem"]>
+
+  export type FileSystemItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    type?: boolean
+    content?: boolean
+    userId?: boolean
+    parentId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    parent?: boolean | FileSystemItem$parentArgs<ExtArgs>
+  }, ExtArgs["result"]["fileSystemItem"]>
+
+  export type FileSystemItemSelectScalar = {
+    id?: boolean
+    name?: boolean
+    type?: boolean
+    content?: boolean
+    userId?: boolean
+    parentId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type FileSystemItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "type" | "content" | "userId" | "parentId" | "createdAt" | "updatedAt", ExtArgs["result"]["fileSystemItem"]>
+  export type FileSystemItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    parent?: boolean | FileSystemItem$parentArgs<ExtArgs>
+    children?: boolean | FileSystemItem$childrenArgs<ExtArgs>
+    _count?: boolean | FileSystemItemCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type FileSystemItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    parent?: boolean | FileSystemItem$parentArgs<ExtArgs>
+  }
+  export type FileSystemItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    parent?: boolean | FileSystemItem$parentArgs<ExtArgs>
+  }
+
+  export type $FileSystemItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FileSystemItem"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      parent: Prisma.$FileSystemItemPayload<ExtArgs> | null
+      children: Prisma.$FileSystemItemPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      type: $Enums.ItemType
+      content: string | null
+      userId: string
+      parentId: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["fileSystemItem"]>
+    composites: {}
+  }
+
+  type FileSystemItemGetPayload<S extends boolean | null | undefined | FileSystemItemDefaultArgs> = $Result.GetResult<Prisma.$FileSystemItemPayload, S>
+
+  type FileSystemItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FileSystemItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FileSystemItemCountAggregateInputType | true
+    }
+
+  export interface FileSystemItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FileSystemItem'], meta: { name: 'FileSystemItem' } }
+    /**
+     * Find zero or one FileSystemItem that matches the filter.
+     * @param {FileSystemItemFindUniqueArgs} args - Arguments to find a FileSystemItem
+     * @example
+     * // Get one FileSystemItem
+     * const fileSystemItem = await prisma.fileSystemItem.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FileSystemItemFindUniqueArgs>(args: SelectSubset<T, FileSystemItemFindUniqueArgs<ExtArgs>>): Prisma__FileSystemItemClient<$Result.GetResult<Prisma.$FileSystemItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one FileSystemItem that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FileSystemItemFindUniqueOrThrowArgs} args - Arguments to find a FileSystemItem
+     * @example
+     * // Get one FileSystemItem
+     * const fileSystemItem = await prisma.fileSystemItem.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FileSystemItemFindUniqueOrThrowArgs>(args: SelectSubset<T, FileSystemItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FileSystemItemClient<$Result.GetResult<Prisma.$FileSystemItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FileSystemItem that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileSystemItemFindFirstArgs} args - Arguments to find a FileSystemItem
+     * @example
+     * // Get one FileSystemItem
+     * const fileSystemItem = await prisma.fileSystemItem.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FileSystemItemFindFirstArgs>(args?: SelectSubset<T, FileSystemItemFindFirstArgs<ExtArgs>>): Prisma__FileSystemItemClient<$Result.GetResult<Prisma.$FileSystemItemPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FileSystemItem that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileSystemItemFindFirstOrThrowArgs} args - Arguments to find a FileSystemItem
+     * @example
+     * // Get one FileSystemItem
+     * const fileSystemItem = await prisma.fileSystemItem.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FileSystemItemFindFirstOrThrowArgs>(args?: SelectSubset<T, FileSystemItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__FileSystemItemClient<$Result.GetResult<Prisma.$FileSystemItemPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FileSystemItems that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileSystemItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FileSystemItems
+     * const fileSystemItems = await prisma.fileSystemItem.findMany()
+     * 
+     * // Get first 10 FileSystemItems
+     * const fileSystemItems = await prisma.fileSystemItem.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const fileSystemItemWithIdOnly = await prisma.fileSystemItem.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FileSystemItemFindManyArgs>(args?: SelectSubset<T, FileSystemItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FileSystemItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a FileSystemItem.
+     * @param {FileSystemItemCreateArgs} args - Arguments to create a FileSystemItem.
+     * @example
+     * // Create one FileSystemItem
+     * const FileSystemItem = await prisma.fileSystemItem.create({
+     *   data: {
+     *     // ... data to create a FileSystemItem
+     *   }
+     * })
+     * 
+     */
+    create<T extends FileSystemItemCreateArgs>(args: SelectSubset<T, FileSystemItemCreateArgs<ExtArgs>>): Prisma__FileSystemItemClient<$Result.GetResult<Prisma.$FileSystemItemPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many FileSystemItems.
+     * @param {FileSystemItemCreateManyArgs} args - Arguments to create many FileSystemItems.
+     * @example
+     * // Create many FileSystemItems
+     * const fileSystemItem = await prisma.fileSystemItem.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FileSystemItemCreateManyArgs>(args?: SelectSubset<T, FileSystemItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FileSystemItems and returns the data saved in the database.
+     * @param {FileSystemItemCreateManyAndReturnArgs} args - Arguments to create many FileSystemItems.
+     * @example
+     * // Create many FileSystemItems
+     * const fileSystemItem = await prisma.fileSystemItem.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FileSystemItems and only return the `id`
+     * const fileSystemItemWithIdOnly = await prisma.fileSystemItem.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FileSystemItemCreateManyAndReturnArgs>(args?: SelectSubset<T, FileSystemItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FileSystemItemPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a FileSystemItem.
+     * @param {FileSystemItemDeleteArgs} args - Arguments to delete one FileSystemItem.
+     * @example
+     * // Delete one FileSystemItem
+     * const FileSystemItem = await prisma.fileSystemItem.delete({
+     *   where: {
+     *     // ... filter to delete one FileSystemItem
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FileSystemItemDeleteArgs>(args: SelectSubset<T, FileSystemItemDeleteArgs<ExtArgs>>): Prisma__FileSystemItemClient<$Result.GetResult<Prisma.$FileSystemItemPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one FileSystemItem.
+     * @param {FileSystemItemUpdateArgs} args - Arguments to update one FileSystemItem.
+     * @example
+     * // Update one FileSystemItem
+     * const fileSystemItem = await prisma.fileSystemItem.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FileSystemItemUpdateArgs>(args: SelectSubset<T, FileSystemItemUpdateArgs<ExtArgs>>): Prisma__FileSystemItemClient<$Result.GetResult<Prisma.$FileSystemItemPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more FileSystemItems.
+     * @param {FileSystemItemDeleteManyArgs} args - Arguments to filter FileSystemItems to delete.
+     * @example
+     * // Delete a few FileSystemItems
+     * const { count } = await prisma.fileSystemItem.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FileSystemItemDeleteManyArgs>(args?: SelectSubset<T, FileSystemItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FileSystemItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileSystemItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FileSystemItems
+     * const fileSystemItem = await prisma.fileSystemItem.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FileSystemItemUpdateManyArgs>(args: SelectSubset<T, FileSystemItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FileSystemItems and returns the data updated in the database.
+     * @param {FileSystemItemUpdateManyAndReturnArgs} args - Arguments to update many FileSystemItems.
+     * @example
+     * // Update many FileSystemItems
+     * const fileSystemItem = await prisma.fileSystemItem.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more FileSystemItems and only return the `id`
+     * const fileSystemItemWithIdOnly = await prisma.fileSystemItem.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FileSystemItemUpdateManyAndReturnArgs>(args: SelectSubset<T, FileSystemItemUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FileSystemItemPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one FileSystemItem.
+     * @param {FileSystemItemUpsertArgs} args - Arguments to update or create a FileSystemItem.
+     * @example
+     * // Update or create a FileSystemItem
+     * const fileSystemItem = await prisma.fileSystemItem.upsert({
+     *   create: {
+     *     // ... data to create a FileSystemItem
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FileSystemItem we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FileSystemItemUpsertArgs>(args: SelectSubset<T, FileSystemItemUpsertArgs<ExtArgs>>): Prisma__FileSystemItemClient<$Result.GetResult<Prisma.$FileSystemItemPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of FileSystemItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileSystemItemCountArgs} args - Arguments to filter FileSystemItems to count.
+     * @example
+     * // Count the number of FileSystemItems
+     * const count = await prisma.fileSystemItem.count({
+     *   where: {
+     *     // ... the filter for the FileSystemItems we want to count
+     *   }
+     * })
+    **/
+    count<T extends FileSystemItemCountArgs>(
+      args?: Subset<T, FileSystemItemCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FileSystemItemCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FileSystemItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileSystemItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FileSystemItemAggregateArgs>(args: Subset<T, FileSystemItemAggregateArgs>): Prisma.PrismaPromise<GetFileSystemItemAggregateType<T>>
+
+    /**
+     * Group by FileSystemItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileSystemItemGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FileSystemItemGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FileSystemItemGroupByArgs['orderBy'] }
+        : { orderBy?: FileSystemItemGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FileSystemItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFileSystemItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FileSystemItem model
+   */
+  readonly fields: FileSystemItemFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FileSystemItem.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FileSystemItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    parent<T extends FileSystemItem$parentArgs<ExtArgs> = {}>(args?: Subset<T, FileSystemItem$parentArgs<ExtArgs>>): Prisma__FileSystemItemClient<$Result.GetResult<Prisma.$FileSystemItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    children<T extends FileSystemItem$childrenArgs<ExtArgs> = {}>(args?: Subset<T, FileSystemItem$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FileSystemItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FileSystemItem model
+   */
+  interface FileSystemItemFieldRefs {
+    readonly id: FieldRef<"FileSystemItem", 'String'>
+    readonly name: FieldRef<"FileSystemItem", 'String'>
+    readonly type: FieldRef<"FileSystemItem", 'ItemType'>
+    readonly content: FieldRef<"FileSystemItem", 'String'>
+    readonly userId: FieldRef<"FileSystemItem", 'String'>
+    readonly parentId: FieldRef<"FileSystemItem", 'String'>
+    readonly createdAt: FieldRef<"FileSystemItem", 'DateTime'>
+    readonly updatedAt: FieldRef<"FileSystemItem", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FileSystemItem findUnique
+   */
+  export type FileSystemItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItem
+     */
+    select?: FileSystemItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileSystemItem
+     */
+    omit?: FileSystemItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileSystemItemInclude<ExtArgs> | null
+    /**
+     * Filter, which FileSystemItem to fetch.
+     */
+    where: FileSystemItemWhereUniqueInput
+  }
+
+  /**
+   * FileSystemItem findUniqueOrThrow
+   */
+  export type FileSystemItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItem
+     */
+    select?: FileSystemItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileSystemItem
+     */
+    omit?: FileSystemItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileSystemItemInclude<ExtArgs> | null
+    /**
+     * Filter, which FileSystemItem to fetch.
+     */
+    where: FileSystemItemWhereUniqueInput
+  }
+
+  /**
+   * FileSystemItem findFirst
+   */
+  export type FileSystemItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItem
+     */
+    select?: FileSystemItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileSystemItem
+     */
+    omit?: FileSystemItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileSystemItemInclude<ExtArgs> | null
+    /**
+     * Filter, which FileSystemItem to fetch.
+     */
+    where?: FileSystemItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FileSystemItems to fetch.
+     */
+    orderBy?: FileSystemItemOrderByWithRelationInput | FileSystemItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FileSystemItems.
+     */
+    cursor?: FileSystemItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FileSystemItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FileSystemItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FileSystemItems.
+     */
+    distinct?: FileSystemItemScalarFieldEnum | FileSystemItemScalarFieldEnum[]
+  }
+
+  /**
+   * FileSystemItem findFirstOrThrow
+   */
+  export type FileSystemItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItem
+     */
+    select?: FileSystemItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileSystemItem
+     */
+    omit?: FileSystemItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileSystemItemInclude<ExtArgs> | null
+    /**
+     * Filter, which FileSystemItem to fetch.
+     */
+    where?: FileSystemItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FileSystemItems to fetch.
+     */
+    orderBy?: FileSystemItemOrderByWithRelationInput | FileSystemItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FileSystemItems.
+     */
+    cursor?: FileSystemItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FileSystemItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FileSystemItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FileSystemItems.
+     */
+    distinct?: FileSystemItemScalarFieldEnum | FileSystemItemScalarFieldEnum[]
+  }
+
+  /**
+   * FileSystemItem findMany
+   */
+  export type FileSystemItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItem
+     */
+    select?: FileSystemItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileSystemItem
+     */
+    omit?: FileSystemItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileSystemItemInclude<ExtArgs> | null
+    /**
+     * Filter, which FileSystemItems to fetch.
+     */
+    where?: FileSystemItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FileSystemItems to fetch.
+     */
+    orderBy?: FileSystemItemOrderByWithRelationInput | FileSystemItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FileSystemItems.
+     */
+    cursor?: FileSystemItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FileSystemItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FileSystemItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FileSystemItems.
+     */
+    distinct?: FileSystemItemScalarFieldEnum | FileSystemItemScalarFieldEnum[]
+  }
+
+  /**
+   * FileSystemItem create
+   */
+  export type FileSystemItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItem
+     */
+    select?: FileSystemItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileSystemItem
+     */
+    omit?: FileSystemItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileSystemItemInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FileSystemItem.
+     */
+    data: XOR<FileSystemItemCreateInput, FileSystemItemUncheckedCreateInput>
+  }
+
+  /**
+   * FileSystemItem createMany
+   */
+  export type FileSystemItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FileSystemItems.
+     */
+    data: FileSystemItemCreateManyInput | FileSystemItemCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * FileSystemItem createManyAndReturn
+   */
+  export type FileSystemItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItem
+     */
+    select?: FileSystemItemSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileSystemItem
+     */
+    omit?: FileSystemItemOmit<ExtArgs> | null
+    /**
+     * The data used to create many FileSystemItems.
+     */
+    data: FileSystemItemCreateManyInput | FileSystemItemCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileSystemItemIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FileSystemItem update
+   */
+  export type FileSystemItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItem
+     */
+    select?: FileSystemItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileSystemItem
+     */
+    omit?: FileSystemItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileSystemItemInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FileSystemItem.
+     */
+    data: XOR<FileSystemItemUpdateInput, FileSystemItemUncheckedUpdateInput>
+    /**
+     * Choose, which FileSystemItem to update.
+     */
+    where: FileSystemItemWhereUniqueInput
+  }
+
+  /**
+   * FileSystemItem updateMany
+   */
+  export type FileSystemItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FileSystemItems.
+     */
+    data: XOR<FileSystemItemUpdateManyMutationInput, FileSystemItemUncheckedUpdateManyInput>
+    /**
+     * Filter which FileSystemItems to update
+     */
+    where?: FileSystemItemWhereInput
+    /**
+     * Limit how many FileSystemItems to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FileSystemItem updateManyAndReturn
+   */
+  export type FileSystemItemUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItem
+     */
+    select?: FileSystemItemSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileSystemItem
+     */
+    omit?: FileSystemItemOmit<ExtArgs> | null
+    /**
+     * The data used to update FileSystemItems.
+     */
+    data: XOR<FileSystemItemUpdateManyMutationInput, FileSystemItemUncheckedUpdateManyInput>
+    /**
+     * Filter which FileSystemItems to update
+     */
+    where?: FileSystemItemWhereInput
+    /**
+     * Limit how many FileSystemItems to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileSystemItemIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FileSystemItem upsert
+   */
+  export type FileSystemItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItem
+     */
+    select?: FileSystemItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileSystemItem
+     */
+    omit?: FileSystemItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileSystemItemInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FileSystemItem to update in case it exists.
+     */
+    where: FileSystemItemWhereUniqueInput
+    /**
+     * In case the FileSystemItem found by the `where` argument doesn't exist, create a new FileSystemItem with this data.
+     */
+    create: XOR<FileSystemItemCreateInput, FileSystemItemUncheckedCreateInput>
+    /**
+     * In case the FileSystemItem was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FileSystemItemUpdateInput, FileSystemItemUncheckedUpdateInput>
+  }
+
+  /**
+   * FileSystemItem delete
+   */
+  export type FileSystemItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItem
+     */
+    select?: FileSystemItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileSystemItem
+     */
+    omit?: FileSystemItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileSystemItemInclude<ExtArgs> | null
+    /**
+     * Filter which FileSystemItem to delete.
+     */
+    where: FileSystemItemWhereUniqueInput
+  }
+
+  /**
+   * FileSystemItem deleteMany
+   */
+  export type FileSystemItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FileSystemItems to delete
+     */
+    where?: FileSystemItemWhereInput
+    /**
+     * Limit how many FileSystemItems to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * FileSystemItem.parent
+   */
+  export type FileSystemItem$parentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItem
+     */
+    select?: FileSystemItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileSystemItem
+     */
+    omit?: FileSystemItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileSystemItemInclude<ExtArgs> | null
+    where?: FileSystemItemWhereInput
+  }
+
+  /**
+   * FileSystemItem.children
+   */
+  export type FileSystemItem$childrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItem
+     */
+    select?: FileSystemItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileSystemItem
+     */
+    omit?: FileSystemItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileSystemItemInclude<ExtArgs> | null
+    where?: FileSystemItemWhereInput
+    orderBy?: FileSystemItemOrderByWithRelationInput | FileSystemItemOrderByWithRelationInput[]
+    cursor?: FileSystemItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FileSystemItemScalarFieldEnum | FileSystemItemScalarFieldEnum[]
+  }
+
+  /**
+   * FileSystemItem without action
+   */
+  export type FileSystemItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileSystemItem
+     */
+    select?: FileSystemItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileSystemItem
+     */
+    omit?: FileSystemItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileSystemItemInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4321,6 +5656,20 @@ export namespace Prisma {
   export type SnippetScalarFieldEnum = (typeof SnippetScalarFieldEnum)[keyof typeof SnippetScalarFieldEnum]
 
 
+  export const FileSystemItemScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    type: 'type',
+    content: 'content',
+    userId: 'userId',
+    parentId: 'parentId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FileSystemItemScalarFieldEnum = (typeof FileSystemItemScalarFieldEnum)[keyof typeof FileSystemItemScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -4335,6 +5684,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -4371,6 +5728,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'ItemType'
+   */
+  export type EnumItemTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ItemType'>
+    
+
+
+  /**
+   * Reference to a field of type 'ItemType[]'
+   */
+  export type ListEnumItemTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ItemType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -4397,6 +5768,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     profile?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
     snippets?: SnippetListRelationFilter
+    files?: FileSystemItemListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -4406,6 +5778,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     profile?: ProfileOrderByWithRelationInput
     snippets?: SnippetOrderByRelationAggregateInput
+    files?: FileSystemItemOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -4418,6 +5791,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     profile?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
     snippets?: SnippetListRelationFilter
+    files?: FileSystemItemListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -4545,6 +5919,82 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"Snippet"> | string
   }
 
+  export type FileSystemItemWhereInput = {
+    AND?: FileSystemItemWhereInput | FileSystemItemWhereInput[]
+    OR?: FileSystemItemWhereInput[]
+    NOT?: FileSystemItemWhereInput | FileSystemItemWhereInput[]
+    id?: StringFilter<"FileSystemItem"> | string
+    name?: StringFilter<"FileSystemItem"> | string
+    type?: EnumItemTypeFilter<"FileSystemItem"> | $Enums.ItemType
+    content?: StringNullableFilter<"FileSystemItem"> | string | null
+    userId?: StringFilter<"FileSystemItem"> | string
+    parentId?: StringNullableFilter<"FileSystemItem"> | string | null
+    createdAt?: DateTimeFilter<"FileSystemItem"> | Date | string
+    updatedAt?: DateTimeFilter<"FileSystemItem"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    parent?: XOR<FileSystemItemNullableScalarRelationFilter, FileSystemItemWhereInput> | null
+    children?: FileSystemItemListRelationFilter
+  }
+
+  export type FileSystemItemOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    type?: SortOrder
+    content?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    parentId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    parent?: FileSystemItemOrderByWithRelationInput
+    children?: FileSystemItemOrderByRelationAggregateInput
+  }
+
+  export type FileSystemItemWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: FileSystemItemWhereInput | FileSystemItemWhereInput[]
+    OR?: FileSystemItemWhereInput[]
+    NOT?: FileSystemItemWhereInput | FileSystemItemWhereInput[]
+    name?: StringFilter<"FileSystemItem"> | string
+    type?: EnumItemTypeFilter<"FileSystemItem"> | $Enums.ItemType
+    content?: StringNullableFilter<"FileSystemItem"> | string | null
+    userId?: StringFilter<"FileSystemItem"> | string
+    parentId?: StringNullableFilter<"FileSystemItem"> | string | null
+    createdAt?: DateTimeFilter<"FileSystemItem"> | Date | string
+    updatedAt?: DateTimeFilter<"FileSystemItem"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    parent?: XOR<FileSystemItemNullableScalarRelationFilter, FileSystemItemWhereInput> | null
+    children?: FileSystemItemListRelationFilter
+  }, "id">
+
+  export type FileSystemItemOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    type?: SortOrder
+    content?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    parentId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FileSystemItemCountOrderByAggregateInput
+    _max?: FileSystemItemMaxOrderByAggregateInput
+    _min?: FileSystemItemMinOrderByAggregateInput
+  }
+
+  export type FileSystemItemScalarWhereWithAggregatesInput = {
+    AND?: FileSystemItemScalarWhereWithAggregatesInput | FileSystemItemScalarWhereWithAggregatesInput[]
+    OR?: FileSystemItemScalarWhereWithAggregatesInput[]
+    NOT?: FileSystemItemScalarWhereWithAggregatesInput | FileSystemItemScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"FileSystemItem"> | string
+    name?: StringWithAggregatesFilter<"FileSystemItem"> | string
+    type?: EnumItemTypeWithAggregatesFilter<"FileSystemItem"> | $Enums.ItemType
+    content?: StringNullableWithAggregatesFilter<"FileSystemItem"> | string | null
+    userId?: StringWithAggregatesFilter<"FileSystemItem"> | string
+    parentId?: StringNullableWithAggregatesFilter<"FileSystemItem"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"FileSystemItem"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"FileSystemItem"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -4552,6 +6002,7 @@ export namespace Prisma {
     createdAt?: Date | string
     profile?: ProfileCreateNestedOneWithoutUserInput
     snippets?: SnippetCreateNestedManyWithoutUserInput
+    files?: FileSystemItemCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -4561,6 +6012,7 @@ export namespace Prisma {
     createdAt?: Date | string
     profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
     snippets?: SnippetUncheckedCreateNestedManyWithoutUserInput
+    files?: FileSystemItemUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -4570,6 +6022,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: ProfileUpdateOneWithoutUserNestedInput
     snippets?: SnippetUpdateManyWithoutUserNestedInput
+    files?: FileSystemItemUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -4579,6 +6032,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
     snippets?: SnippetUncheckedUpdateManyWithoutUserNestedInput
+    files?: FileSystemItemUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -4705,6 +6159,85 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type FileSystemItemCreateInput = {
+    id?: string
+    name: string
+    type: $Enums.ItemType
+    content?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutFilesInput
+    parent?: FileSystemItemCreateNestedOneWithoutChildrenInput
+    children?: FileSystemItemCreateNestedManyWithoutParentInput
+  }
+
+  export type FileSystemItemUncheckedCreateInput = {
+    id?: string
+    name: string
+    type: $Enums.ItemType
+    content?: string | null
+    userId: string
+    parentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    children?: FileSystemItemUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type FileSystemItemUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutFilesNestedInput
+    parent?: FileSystemItemUpdateOneWithoutChildrenNestedInput
+    children?: FileSystemItemUpdateManyWithoutParentNestedInput
+  }
+
+  export type FileSystemItemUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    children?: FileSystemItemUncheckedUpdateManyWithoutParentNestedInput
+  }
+
+  export type FileSystemItemCreateManyInput = {
+    id?: string
+    name: string
+    type: $Enums.ItemType
+    content?: string | null
+    userId: string
+    parentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FileSystemItemUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FileSystemItemUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -4742,7 +6275,17 @@ export namespace Prisma {
     none?: SnippetWhereInput
   }
 
+  export type FileSystemItemListRelationFilter = {
+    every?: FileSystemItemWhereInput
+    some?: FileSystemItemWhereInput
+    none?: FileSystemItemWhereInput
+  }
+
   export type SnippetOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FileSystemItemOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -4849,6 +6392,99 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
+  export type EnumItemTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ItemType | EnumItemTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumItemTypeFilter<$PrismaModel> | $Enums.ItemType
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type FileSystemItemNullableScalarRelationFilter = {
+    is?: FileSystemItemWhereInput | null
+    isNot?: FileSystemItemWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type FileSystemItemCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    type?: SortOrder
+    content?: SortOrder
+    userId?: SortOrder
+    parentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FileSystemItemMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    type?: SortOrder
+    content?: SortOrder
+    userId?: SortOrder
+    parentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FileSystemItemMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    type?: SortOrder
+    content?: SortOrder
+    userId?: SortOrder
+    parentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumItemTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ItemType | EnumItemTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumItemTypeWithAggregatesFilter<$PrismaModel> | $Enums.ItemType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumItemTypeFilter<$PrismaModel>
+    _max?: NestedEnumItemTypeFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type ProfileCreateNestedOneWithoutUserInput = {
     create?: XOR<ProfileCreateWithoutUserInput, ProfileUncheckedCreateWithoutUserInput>
     connectOrCreate?: ProfileCreateOrConnectWithoutUserInput
@@ -4862,6 +6498,13 @@ export namespace Prisma {
     connect?: SnippetWhereUniqueInput | SnippetWhereUniqueInput[]
   }
 
+  export type FileSystemItemCreateNestedManyWithoutUserInput = {
+    create?: XOR<FileSystemItemCreateWithoutUserInput, FileSystemItemUncheckedCreateWithoutUserInput> | FileSystemItemCreateWithoutUserInput[] | FileSystemItemUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FileSystemItemCreateOrConnectWithoutUserInput | FileSystemItemCreateOrConnectWithoutUserInput[]
+    createMany?: FileSystemItemCreateManyUserInputEnvelope
+    connect?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+  }
+
   export type ProfileUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<ProfileCreateWithoutUserInput, ProfileUncheckedCreateWithoutUserInput>
     connectOrCreate?: ProfileCreateOrConnectWithoutUserInput
@@ -4873,6 +6516,13 @@ export namespace Prisma {
     connectOrCreate?: SnippetCreateOrConnectWithoutUserInput | SnippetCreateOrConnectWithoutUserInput[]
     createMany?: SnippetCreateManyUserInputEnvelope
     connect?: SnippetWhereUniqueInput | SnippetWhereUniqueInput[]
+  }
+
+  export type FileSystemItemUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<FileSystemItemCreateWithoutUserInput, FileSystemItemUncheckedCreateWithoutUserInput> | FileSystemItemCreateWithoutUserInput[] | FileSystemItemUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FileSystemItemCreateOrConnectWithoutUserInput | FileSystemItemCreateOrConnectWithoutUserInput[]
+    createMany?: FileSystemItemCreateManyUserInputEnvelope
+    connect?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -4907,6 +6557,20 @@ export namespace Prisma {
     deleteMany?: SnippetScalarWhereInput | SnippetScalarWhereInput[]
   }
 
+  export type FileSystemItemUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FileSystemItemCreateWithoutUserInput, FileSystemItemUncheckedCreateWithoutUserInput> | FileSystemItemCreateWithoutUserInput[] | FileSystemItemUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FileSystemItemCreateOrConnectWithoutUserInput | FileSystemItemCreateOrConnectWithoutUserInput[]
+    upsert?: FileSystemItemUpsertWithWhereUniqueWithoutUserInput | FileSystemItemUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FileSystemItemCreateManyUserInputEnvelope
+    set?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    disconnect?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    delete?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    connect?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    update?: FileSystemItemUpdateWithWhereUniqueWithoutUserInput | FileSystemItemUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FileSystemItemUpdateManyWithWhereWithoutUserInput | FileSystemItemUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FileSystemItemScalarWhereInput | FileSystemItemScalarWhereInput[]
+  }
+
   export type ProfileUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<ProfileCreateWithoutUserInput, ProfileUncheckedCreateWithoutUserInput>
     connectOrCreate?: ProfileCreateOrConnectWithoutUserInput
@@ -4929,6 +6593,20 @@ export namespace Prisma {
     update?: SnippetUpdateWithWhereUniqueWithoutUserInput | SnippetUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: SnippetUpdateManyWithWhereWithoutUserInput | SnippetUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: SnippetScalarWhereInput | SnippetScalarWhereInput[]
+  }
+
+  export type FileSystemItemUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FileSystemItemCreateWithoutUserInput, FileSystemItemUncheckedCreateWithoutUserInput> | FileSystemItemCreateWithoutUserInput[] | FileSystemItemUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FileSystemItemCreateOrConnectWithoutUserInput | FileSystemItemCreateOrConnectWithoutUserInput[]
+    upsert?: FileSystemItemUpsertWithWhereUniqueWithoutUserInput | FileSystemItemUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FileSystemItemCreateManyUserInputEnvelope
+    set?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    disconnect?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    delete?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    connect?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    update?: FileSystemItemUpdateWithWhereUniqueWithoutUserInput | FileSystemItemUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FileSystemItemUpdateManyWithWhereWithoutUserInput | FileSystemItemUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FileSystemItemScalarWhereInput | FileSystemItemScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutProfileInput = {
@@ -4957,6 +6635,86 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutSnippetsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSnippetsInput, UserUpdateWithoutSnippetsInput>, UserUncheckedUpdateWithoutSnippetsInput>
+  }
+
+  export type UserCreateNestedOneWithoutFilesInput = {
+    create?: XOR<UserCreateWithoutFilesInput, UserUncheckedCreateWithoutFilesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFilesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type FileSystemItemCreateNestedOneWithoutChildrenInput = {
+    create?: XOR<FileSystemItemCreateWithoutChildrenInput, FileSystemItemUncheckedCreateWithoutChildrenInput>
+    connectOrCreate?: FileSystemItemCreateOrConnectWithoutChildrenInput
+    connect?: FileSystemItemWhereUniqueInput
+  }
+
+  export type FileSystemItemCreateNestedManyWithoutParentInput = {
+    create?: XOR<FileSystemItemCreateWithoutParentInput, FileSystemItemUncheckedCreateWithoutParentInput> | FileSystemItemCreateWithoutParentInput[] | FileSystemItemUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: FileSystemItemCreateOrConnectWithoutParentInput | FileSystemItemCreateOrConnectWithoutParentInput[]
+    createMany?: FileSystemItemCreateManyParentInputEnvelope
+    connect?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+  }
+
+  export type FileSystemItemUncheckedCreateNestedManyWithoutParentInput = {
+    create?: XOR<FileSystemItemCreateWithoutParentInput, FileSystemItemUncheckedCreateWithoutParentInput> | FileSystemItemCreateWithoutParentInput[] | FileSystemItemUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: FileSystemItemCreateOrConnectWithoutParentInput | FileSystemItemCreateOrConnectWithoutParentInput[]
+    createMany?: FileSystemItemCreateManyParentInputEnvelope
+    connect?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+  }
+
+  export type EnumItemTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ItemType
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type UserUpdateOneRequiredWithoutFilesNestedInput = {
+    create?: XOR<UserCreateWithoutFilesInput, UserUncheckedCreateWithoutFilesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFilesInput
+    upsert?: UserUpsertWithoutFilesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFilesInput, UserUpdateWithoutFilesInput>, UserUncheckedUpdateWithoutFilesInput>
+  }
+
+  export type FileSystemItemUpdateOneWithoutChildrenNestedInput = {
+    create?: XOR<FileSystemItemCreateWithoutChildrenInput, FileSystemItemUncheckedCreateWithoutChildrenInput>
+    connectOrCreate?: FileSystemItemCreateOrConnectWithoutChildrenInput
+    upsert?: FileSystemItemUpsertWithoutChildrenInput
+    disconnect?: FileSystemItemWhereInput | boolean
+    delete?: FileSystemItemWhereInput | boolean
+    connect?: FileSystemItemWhereUniqueInput
+    update?: XOR<XOR<FileSystemItemUpdateToOneWithWhereWithoutChildrenInput, FileSystemItemUpdateWithoutChildrenInput>, FileSystemItemUncheckedUpdateWithoutChildrenInput>
+  }
+
+  export type FileSystemItemUpdateManyWithoutParentNestedInput = {
+    create?: XOR<FileSystemItemCreateWithoutParentInput, FileSystemItemUncheckedCreateWithoutParentInput> | FileSystemItemCreateWithoutParentInput[] | FileSystemItemUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: FileSystemItemCreateOrConnectWithoutParentInput | FileSystemItemCreateOrConnectWithoutParentInput[]
+    upsert?: FileSystemItemUpsertWithWhereUniqueWithoutParentInput | FileSystemItemUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: FileSystemItemCreateManyParentInputEnvelope
+    set?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    disconnect?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    delete?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    connect?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    update?: FileSystemItemUpdateWithWhereUniqueWithoutParentInput | FileSystemItemUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: FileSystemItemUpdateManyWithWhereWithoutParentInput | FileSystemItemUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: FileSystemItemScalarWhereInput | FileSystemItemScalarWhereInput[]
+  }
+
+  export type FileSystemItemUncheckedUpdateManyWithoutParentNestedInput = {
+    create?: XOR<FileSystemItemCreateWithoutParentInput, FileSystemItemUncheckedCreateWithoutParentInput> | FileSystemItemCreateWithoutParentInput[] | FileSystemItemUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: FileSystemItemCreateOrConnectWithoutParentInput | FileSystemItemCreateOrConnectWithoutParentInput[]
+    upsert?: FileSystemItemUpsertWithWhereUniqueWithoutParentInput | FileSystemItemUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: FileSystemItemCreateManyParentInputEnvelope
+    set?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    disconnect?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    delete?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    connect?: FileSystemItemWhereUniqueInput | FileSystemItemWhereUniqueInput[]
+    update?: FileSystemItemUpdateWithWhereUniqueWithoutParentInput | FileSystemItemUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: FileSystemItemUpdateManyWithWhereWithoutParentInput | FileSystemItemUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: FileSystemItemScalarWhereInput | FileSystemItemScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5026,6 +6784,65 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedEnumItemTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ItemType | EnumItemTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumItemTypeFilter<$PrismaModel> | $Enums.ItemType
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedEnumItemTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ItemType | EnumItemTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumItemTypeWithAggregatesFilter<$PrismaModel> | $Enums.ItemType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumItemTypeFilter<$PrismaModel>
+    _max?: NestedEnumItemTypeFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type ProfileCreateWithoutUserInput = {
     id?: string
     operatorName: string
@@ -5064,6 +6881,38 @@ export namespace Prisma {
 
   export type SnippetCreateManyUserInputEnvelope = {
     data: SnippetCreateManyUserInput | SnippetCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FileSystemItemCreateWithoutUserInput = {
+    id?: string
+    name: string
+    type: $Enums.ItemType
+    content?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parent?: FileSystemItemCreateNestedOneWithoutChildrenInput
+    children?: FileSystemItemCreateNestedManyWithoutParentInput
+  }
+
+  export type FileSystemItemUncheckedCreateWithoutUserInput = {
+    id?: string
+    name: string
+    type: $Enums.ItemType
+    content?: string | null
+    parentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    children?: FileSystemItemUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type FileSystemItemCreateOrConnectWithoutUserInput = {
+    where: FileSystemItemWhereUniqueInput
+    create: XOR<FileSystemItemCreateWithoutUserInput, FileSystemItemUncheckedCreateWithoutUserInput>
+  }
+
+  export type FileSystemItemCreateManyUserInputEnvelope = {
+    data: FileSystemItemCreateManyUserInput | FileSystemItemCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -5117,12 +6966,43 @@ export namespace Prisma {
     userId?: StringFilter<"Snippet"> | string
   }
 
+  export type FileSystemItemUpsertWithWhereUniqueWithoutUserInput = {
+    where: FileSystemItemWhereUniqueInput
+    update: XOR<FileSystemItemUpdateWithoutUserInput, FileSystemItemUncheckedUpdateWithoutUserInput>
+    create: XOR<FileSystemItemCreateWithoutUserInput, FileSystemItemUncheckedCreateWithoutUserInput>
+  }
+
+  export type FileSystemItemUpdateWithWhereUniqueWithoutUserInput = {
+    where: FileSystemItemWhereUniqueInput
+    data: XOR<FileSystemItemUpdateWithoutUserInput, FileSystemItemUncheckedUpdateWithoutUserInput>
+  }
+
+  export type FileSystemItemUpdateManyWithWhereWithoutUserInput = {
+    where: FileSystemItemScalarWhereInput
+    data: XOR<FileSystemItemUpdateManyMutationInput, FileSystemItemUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type FileSystemItemScalarWhereInput = {
+    AND?: FileSystemItemScalarWhereInput | FileSystemItemScalarWhereInput[]
+    OR?: FileSystemItemScalarWhereInput[]
+    NOT?: FileSystemItemScalarWhereInput | FileSystemItemScalarWhereInput[]
+    id?: StringFilter<"FileSystemItem"> | string
+    name?: StringFilter<"FileSystemItem"> | string
+    type?: EnumItemTypeFilter<"FileSystemItem"> | $Enums.ItemType
+    content?: StringNullableFilter<"FileSystemItem"> | string | null
+    userId?: StringFilter<"FileSystemItem"> | string
+    parentId?: StringNullableFilter<"FileSystemItem"> | string | null
+    createdAt?: DateTimeFilter<"FileSystemItem"> | Date | string
+    updatedAt?: DateTimeFilter<"FileSystemItem"> | Date | string
+  }
+
   export type UserCreateWithoutProfileInput = {
     id?: string
     email: string
     password: string
     createdAt?: Date | string
     snippets?: SnippetCreateNestedManyWithoutUserInput
+    files?: FileSystemItemCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProfileInput = {
@@ -5131,6 +7011,7 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     snippets?: SnippetUncheckedCreateNestedManyWithoutUserInput
+    files?: FileSystemItemUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProfileInput = {
@@ -5155,6 +7036,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     snippets?: SnippetUpdateManyWithoutUserNestedInput
+    files?: FileSystemItemUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProfileInput = {
@@ -5163,6 +7045,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     snippets?: SnippetUncheckedUpdateManyWithoutUserNestedInput
+    files?: FileSystemItemUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSnippetsInput = {
@@ -5171,6 +7054,7 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     profile?: ProfileCreateNestedOneWithoutUserInput
+    files?: FileSystemItemCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSnippetsInput = {
@@ -5179,6 +7063,7 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
+    files?: FileSystemItemUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSnippetsInput = {
@@ -5203,6 +7088,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: ProfileUpdateOneWithoutUserNestedInput
+    files?: FileSystemItemUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSnippetsInput = {
@@ -5211,6 +7097,167 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
+    files?: FileSystemItemUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutFilesInput = {
+    id?: string
+    email: string
+    password: string
+    createdAt?: Date | string
+    profile?: ProfileCreateNestedOneWithoutUserInput
+    snippets?: SnippetCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutFilesInput = {
+    id?: string
+    email: string
+    password: string
+    createdAt?: Date | string
+    profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
+    snippets?: SnippetUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutFilesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFilesInput, UserUncheckedCreateWithoutFilesInput>
+  }
+
+  export type FileSystemItemCreateWithoutChildrenInput = {
+    id?: string
+    name: string
+    type: $Enums.ItemType
+    content?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutFilesInput
+    parent?: FileSystemItemCreateNestedOneWithoutChildrenInput
+  }
+
+  export type FileSystemItemUncheckedCreateWithoutChildrenInput = {
+    id?: string
+    name: string
+    type: $Enums.ItemType
+    content?: string | null
+    userId: string
+    parentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FileSystemItemCreateOrConnectWithoutChildrenInput = {
+    where: FileSystemItemWhereUniqueInput
+    create: XOR<FileSystemItemCreateWithoutChildrenInput, FileSystemItemUncheckedCreateWithoutChildrenInput>
+  }
+
+  export type FileSystemItemCreateWithoutParentInput = {
+    id?: string
+    name: string
+    type: $Enums.ItemType
+    content?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutFilesInput
+    children?: FileSystemItemCreateNestedManyWithoutParentInput
+  }
+
+  export type FileSystemItemUncheckedCreateWithoutParentInput = {
+    id?: string
+    name: string
+    type: $Enums.ItemType
+    content?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    children?: FileSystemItemUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type FileSystemItemCreateOrConnectWithoutParentInput = {
+    where: FileSystemItemWhereUniqueInput
+    create: XOR<FileSystemItemCreateWithoutParentInput, FileSystemItemUncheckedCreateWithoutParentInput>
+  }
+
+  export type FileSystemItemCreateManyParentInputEnvelope = {
+    data: FileSystemItemCreateManyParentInput | FileSystemItemCreateManyParentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutFilesInput = {
+    update: XOR<UserUpdateWithoutFilesInput, UserUncheckedUpdateWithoutFilesInput>
+    create: XOR<UserCreateWithoutFilesInput, UserUncheckedCreateWithoutFilesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutFilesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutFilesInput, UserUncheckedUpdateWithoutFilesInput>
+  }
+
+  export type UserUpdateWithoutFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: ProfileUpdateOneWithoutUserNestedInput
+    snippets?: SnippetUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
+    snippets?: SnippetUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type FileSystemItemUpsertWithoutChildrenInput = {
+    update: XOR<FileSystemItemUpdateWithoutChildrenInput, FileSystemItemUncheckedUpdateWithoutChildrenInput>
+    create: XOR<FileSystemItemCreateWithoutChildrenInput, FileSystemItemUncheckedCreateWithoutChildrenInput>
+    where?: FileSystemItemWhereInput
+  }
+
+  export type FileSystemItemUpdateToOneWithWhereWithoutChildrenInput = {
+    where?: FileSystemItemWhereInput
+    data: XOR<FileSystemItemUpdateWithoutChildrenInput, FileSystemItemUncheckedUpdateWithoutChildrenInput>
+  }
+
+  export type FileSystemItemUpdateWithoutChildrenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutFilesNestedInput
+    parent?: FileSystemItemUpdateOneWithoutChildrenNestedInput
+  }
+
+  export type FileSystemItemUncheckedUpdateWithoutChildrenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FileSystemItemUpsertWithWhereUniqueWithoutParentInput = {
+    where: FileSystemItemWhereUniqueInput
+    update: XOR<FileSystemItemUpdateWithoutParentInput, FileSystemItemUncheckedUpdateWithoutParentInput>
+    create: XOR<FileSystemItemCreateWithoutParentInput, FileSystemItemUncheckedCreateWithoutParentInput>
+  }
+
+  export type FileSystemItemUpdateWithWhereUniqueWithoutParentInput = {
+    where: FileSystemItemWhereUniqueInput
+    data: XOR<FileSystemItemUpdateWithoutParentInput, FileSystemItemUncheckedUpdateWithoutParentInput>
+  }
+
+  export type FileSystemItemUpdateManyWithWhereWithoutParentInput = {
+    where: FileSystemItemScalarWhereInput
+    data: XOR<FileSystemItemUpdateManyMutationInput, FileSystemItemUncheckedUpdateManyWithoutParentInput>
   }
 
   export type SnippetCreateManyUserInput = {
@@ -5218,6 +7265,16 @@ export namespace Prisma {
     title: string
     code: string
     createdAt?: Date | string
+  }
+
+  export type FileSystemItemCreateManyUserInput = {
+    id?: string
+    name: string
+    type: $Enums.ItemType
+    content?: string | null
+    parentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type SnippetUpdateWithoutUserInput = {
@@ -5239,6 +7296,80 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FileSystemItemUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parent?: FileSystemItemUpdateOneWithoutChildrenNestedInput
+    children?: FileSystemItemUpdateManyWithoutParentNestedInput
+  }
+
+  export type FileSystemItemUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    children?: FileSystemItemUncheckedUpdateManyWithoutParentNestedInput
+  }
+
+  export type FileSystemItemUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FileSystemItemCreateManyParentInput = {
+    id?: string
+    name: string
+    type: $Enums.ItemType
+    content?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FileSystemItemUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutFilesNestedInput
+    children?: FileSystemItemUpdateManyWithoutParentNestedInput
+  }
+
+  export type FileSystemItemUncheckedUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    children?: FileSystemItemUncheckedUpdateManyWithoutParentNestedInput
+  }
+
+  export type FileSystemItemUncheckedUpdateManyWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

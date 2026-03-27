@@ -142,6 +142,17 @@ exports.Prisma.SnippetScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.FileSystemItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  content: 'content',
+  userId: 'userId',
+  parentId: 'parentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -152,11 +163,20 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+exports.ItemType = exports.$Enums.ItemType = {
+  FILE: 'FILE',
+  FOLDER: 'FOLDER'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
   Profile: 'Profile',
-  Snippet: 'Snippet'
+  Snippet: 'Snippet',
+  FileSystemItem: 'FileSystemItem'
 };
 
 /**

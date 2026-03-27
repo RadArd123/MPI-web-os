@@ -42,7 +42,7 @@ export default function Arcade() {
           setTimeout(() => setPhase("ready"), 400);
           return 100;
         }
-        // Variable speed — slows near 70%, fast burst at end
+        
         const speed = prev < 30 ? 3 : prev < 70 ? 1.5 : prev < 90 ? 4 : 2;
         return Math.min(prev + speed + Math.random() * 2, 100);
       });

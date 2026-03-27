@@ -1,19 +1,22 @@
 'use client';
 
-import { 
-  Terminal, 
-  Gamepad2, 
-  Settings, 
-  FolderClosed, 
+import {
+  Terminal,
+  Gamepad2,
+  Settings,
+  FolderClosed,
   Activity
 } from 'lucide-react';
 import SpaceBackground from '@/components/SpaceBackground';
-import Sidebar from '@/components/Sidebar'; 
+import Sidebar from '@/components/Sidebar';
 import { useAuthStore } from '@/store/authStore';
 import Window from '@/components/Window';
-import { useWindowStore } from '@/store/useWindowStore';
+import { useWindowStore } from '@/store/windowStore';
 import CaptainsLog from '@/components/CaptainsLog';
 import Arcade from '@/components/Arcade';
+import { Explorer } from '@/components/Explorer';
+
+
 
 
 
@@ -41,8 +44,8 @@ export default function WebOSDesktop() {
       <main className="flex-1 relative z-10 p-8">
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6">
           {desktopApps.map((app) => (
-            <div 
-              key={app.id} 
+            <div
+              key={app.id}
               className="flex flex-col items-center gap-3 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-all group border border-transparent hover:border-gray-800"
               onClick={() => openWindow(app.id, app.name)}
             >
@@ -70,9 +73,10 @@ export default function WebOSDesktop() {
 
 
           >
-           
+
             {win.id === 'captains-log' && <CaptainsLog />}
             {win.id === 'arcade' && <Arcade />}
+            {win.id === 'files' && <Explorer />}
             {win.id === 'settings' && <div className="p-4 text-center">System Settings encrypted.</div>}
           </Window>
         ))}
