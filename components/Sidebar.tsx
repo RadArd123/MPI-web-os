@@ -11,7 +11,7 @@ import {
   Activity,
   LucideIcon,
 } from "lucide-react";
-import { useWindowStore } from "@/store/useWindowStore";
+import { useWindowStore } from "@/store/windowStore";
 
 const ICON_MAP: Record<string, LucideIcon> = {
   "captains-log": Terminal,
