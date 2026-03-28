@@ -43,7 +43,7 @@ describe('JWT Utilities', () => {
 
   it('should return null for a tampered token', async () => {
     const token = await generateToken({ id: '1' });
-    // Tamper with the token by changing a character
+
     const tampered = token.slice(0, -5) + 'XXXXX';
 
     const decoded = await verifyToken(tampered);

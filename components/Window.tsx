@@ -6,7 +6,7 @@ import { useRef, useState } from 'react';
 import { Draggable } from './Draggable';
 
 export default function Window({ title, zIndex, children, isMaximized, isMinimized, onClose, onFocus, onMinimized, onMaximized }: WindowProps) {
-  // Pornim de la o poziție default
+
 const [savedPos, setSavedPos] = useState({ x: 100, y: 100 });
   const windowRef = useRef<HTMLDivElement>(null);
 
