@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mock dependencies before importing the controller
+
 vi.mock('@/lib/service/auth.service', () => ({
   AuthService: {
     findUserByEmail: vi.fn(),

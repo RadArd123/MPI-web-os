@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mock SnippetService before importing the controller
+
 vi.mock('@/lib/service/snippet.service', () => ({
   SnippetService: {
     create: vi.fn(),
@@ -14,7 +14,7 @@ import { SnippetService } from '@/lib/service/snippet.service';
 
 const mockedService = vi.mocked(SnippetService);
 
-// Helper to create a Request with JSON body
+
 function jsonRequest(body: unknown, url = 'http://localhost/api/snippets') {
   return new Request(url, {
     method: 'POST',

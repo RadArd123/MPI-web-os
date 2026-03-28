@@ -3,7 +3,7 @@ import { fileSystemService } from '@/lib/service/fileSystem.service';
 import { prisma } from '@/lib/prisma';
 import { ItemType } from '@/generated/prisma';
 
-// 1. Facem mock la Prisma Client
+
 vi.mock('@/lib/prisma', () => ({
   prisma: {
     fileSystemItem: {
@@ -20,7 +20,7 @@ describe('FileSystem Service Tests', () => {
   const mockUserId = 'user-123';
   
   beforeEach(() => {
-    // Resetăm de fiecare dată starea mock-urilor înainte de un test nou
+  
     vi.clearAllMocks();
   });
 
@@ -30,7 +30,7 @@ describe('FileSystem Service Tests', () => {
       { id: '2', name: 'Documente', type: 'FOLDER', parentId: null, userId: mockUserId }
     ];
 
-    // Învățăm mock-ul Prisma ce să returneze
+
     (prisma.fileSystemItem.findMany as any).mockResolvedValue(mockFiles);
 
     const result = await fileSystemService.getFolderContent(mockUserId, null);
@@ -45,7 +45,7 @@ describe('FileSystem Service Tests', () => {
   });
 
   it('ar trebui să creeze un item doar dacă nu există un duplicat', async () => {
-    // Cazul 1: Fără duplicat -> Se creează cu succes
+
     (prisma.fileSystemItem.findFirst as any).mockResolvedValue(null);
     const mockCreated = { id: '123', name: 'Nou', type: 'FILE' as ItemType };
     (prisma.fileSystemItem.create as any).mockResolvedValue(mockCreated);
@@ -59,7 +59,6 @@ describe('FileSystem Service Tests', () => {
     expect(result).toEqual(mockCreated);
     expect(prisma.fileSystemItem.create).toHaveBeenCalled();
 
-    // Cazul 2: Când există duplicat -> Aruncă eroare
     (prisma.fileSystemItem.findFirst as any).mockResolvedValue({ id: 'existing' });
     
     await expect(
