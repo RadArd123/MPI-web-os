@@ -183,9 +183,9 @@ export function SystemMonitor() {
 
 
           {windows && windows.length > 0 ? windows.map((win: WindowInstance) => {
-
-            const mockMem = (win.id.length * 12 + Math.random() * 5).toFixed(1);
-            const mockCpu = (Math.random() * 2).toFixed(1);
+            const hash = win.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+            const mockMem = (win.id.length * 12 + (hash % 15)).toFixed(1);
+            const mockCpu = (hash % 5).toFixed(1);
 
             return (
               <div key={win.id} className="flex items-center justify-between p-2 rounded hover:bg-zinc-800/50 transition-colors group">
