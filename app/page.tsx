@@ -16,6 +16,7 @@ import CaptainsLog from '@/components/CaptainsLog';
 import Arcade from '@/components/Arcade';
 import { Explorer } from '@/components/Explorer';
 import { SystemMonitor } from '@/components/SystemMonitor';
+import SettingsPanel from '@/components/SettingsPanel';
 
 
 
@@ -79,7 +80,7 @@ export default function WebOSDesktop() {
             {win.id === 'arcade' && <Arcade />}
             {win.id === 'files' && <Explorer />}
             {win.id === 'monitor' && <SystemMonitor />}
-            {win.id === 'settings' && <div className="p-4 text-center">System Settings encrypted.</div>}
+            {win.id === 'settings' && <SettingsPanel />}
           </Window>
         ))}
       </main>

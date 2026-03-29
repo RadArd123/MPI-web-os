@@ -48,4 +48,5 @@ export interface AuthState {
   signup: (credentials: SignupCredentials) => Promise<{ success: boolean; error?: string }>;
   login: (credentials: LoginCredentials) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
+  deleteAccount: (userId: string) => Promise<void>;
 }

@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
 import { fileSystemService } from "../service/fileSystem.service";
 import { cookies } from "next/headers";
 import { JWTUtils } from "../auth/jwt";
@@ -7,7 +6,7 @@ import { JWTUtils } from "../auth/jwt";
 
 export const FileSystemController = {
 
-    async getUserId() {
+  async getUserId() {
     const cookieStore = await cookies();
     const token = cookieStore.get("stellar_session")?.value;
     if (!token) return null;
@@ -33,7 +32,6 @@ export const FileSystemController = {
     }
   },
 
-  // Handler pentru creare (File/Folder)
   async create(req: Request) {
     const userId = await this.getUserId();
     if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -47,7 +45,6 @@ export const FileSystemController = {
     }
   },
 
-  // Handler pentru update (Rename/Move/Content)
   async update(req: Request, id: string) {
     const userId = await this.getUserId();
     if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -72,8 +69,8 @@ export const FileSystemController = {
 
   async delete(req: Request, id: string) {
     const userId = await this.getUserId();
-    if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });  
-    
+    if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
 
     try {
       await fileSystemService.deleteItem(userId, id);

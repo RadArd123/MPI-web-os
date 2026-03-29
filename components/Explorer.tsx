@@ -1,27 +1,27 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { 
-  Folder, 
-  File, 
-  ChevronLeft, 
-  Plus, 
-  Trash2, 
-  Edit3, 
+import {
+  Folder,
+  File,
+  ChevronLeft,
+  Plus,
+  Trash2,
+  Edit3,
   Loader2,
   HardDrive
 } from 'lucide-react';
 import { useFileSystemStore } from '@/store/usefileSystemStore';
 
 export const Explorer = () => {
-  const { 
-    items, 
-    currentFolderId, 
-    isLoading, 
-    setCurrentFolder, 
-    fetchItems, 
-    createItem, 
-    deleteItem, 
+  const {
+    items,
+    currentFolderId,
+    isLoading,
+    setCurrentFolder,
+    fetchItems,
+    createItem,
+    deleteItem,
     renameItem,
     updateContent
   } = useFileSystemStore();
@@ -55,13 +55,12 @@ export const Explorer = () => {
 
   return (
     <div className="flex flex-col h-full text-zinc-300 font-mono text-sm">
-      
-      {/* Toolbar - Acțiuni și Navigare */}
+
       <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/5 gap-4">
         {editingFile ? (
           <>
             <div className="flex items-center gap-2">
-              <button 
+              <button
                 onClick={() => setEditingFile(null)}
                 className="p-1.5 hover:bg-white/10 rounded-md text-cyan-400 transition-colors"
                 title="Înapoi"
@@ -75,7 +74,7 @@ export const Explorer = () => {
                 </span>
               </div>
             </div>
-            <button 
+            <button
               onClick={handleSaveContent}
               className="px-3 py-1 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 rounded border border-cyan-500/50 text-xs transition-colors tracking-widest"
             >
@@ -86,7 +85,7 @@ export const Explorer = () => {
           <>
             <div className="flex items-center gap-2">
               {currentFolderId && (
-                <button 
+                <button
                   onClick={() => setCurrentFolder(null)} // Reset la root
                   className="p-1.5 hover:bg-white/10 rounded-md text-cyan-400 transition-colors"
                   title="Înapoi la Root"
@@ -110,14 +109,14 @@ export const Explorer = () => {
                 placeholder="Nume..."
                 className="bg-black border border-white/10 rounded px-2 py-1 text-xs focus:outline-none focus:border-cyan-500/50 w-32"
               />
-              <button 
+              <button
                 onClick={() => handleCreate('FOLDER')}
                 className="p-1.5 hover:bg-cyan-500/20 hover:text-cyan-400 rounded border border-white/10 transition-all"
                 title="Folder Nou"
               >
                 <Folder size={16} />
               </button>
-              <button 
+              <button
                 onClick={() => handleCreate('FILE')}
                 className="p-1.5 hover:bg-purple-500/20 hover:text-purple-400 rounded border border-white/10 transition-all"
                 title="Fișier Nou"
@@ -129,7 +128,6 @@ export const Explorer = () => {
         )}
       </div>
 
-      {/* Listă Fișiere sau Editor */}
       <div className="flex-1 overflow-y-auto min-h-[300px]">
         {editingFile ? (
           <textarea
@@ -159,7 +157,7 @@ export const Explorer = () => {
             </thead>
             <tbody>
               {items.map((item) => (
-                <tr 
+                <tr
                   key={item.id}
                   onDoubleClick={() => {
                     if (item.type === 'FOLDER') {
@@ -185,13 +183,13 @@ export const Explorer = () => {
                   </td>
                   <td className="py-2 text-right">
                     <div className="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button 
+                      <button
                         onClick={() => handleRename(item.id, item.name)}
                         className="p-1 hover:text-cyan-400 text-zinc-600"
                       >
                         <Edit3 size={14} />
                       </button>
-                      <button 
+                      <button
                         onClick={() => deleteItem(item.id)}
                         className="p-1 hover:text-red-400 text-zinc-600"
                       >
@@ -206,7 +204,7 @@ export const Explorer = () => {
         )}
       </div>
 
-      {/* Footer Info */}
+
       <div className="mt-4 pt-2 border-t border-white/5 flex justify-between items-center text-[9px] text-zinc-600 uppercase">
         <span>{items.length} obiecte detectate</span>
         <span>Sistem: File_System_v1</span>

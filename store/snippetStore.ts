@@ -10,7 +10,7 @@ export const useSnippetStore = create<SnippetState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const res = await fetch(`/api/snippets?userId=${userId}`);
-      if (!res.ok) throw new Error("Nu am putut încărca datele.");
+      if (!res.ok) throw new Error("Failed to load snippets.");
       const data = await res.json();
       set({ snippets: data });
     } catch (err: unknown) {
