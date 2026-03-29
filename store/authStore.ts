@@ -78,4 +78,18 @@ export const useAuthStore = create<AuthState>((set) => ({
       console.error("LOGOUT_SEQUENCE_INTERRUPTED");
     }
   },
+   deleteAccount: async (userId: string) => {  
+    try {
+      const response = await fetch(`/api/auth/deleteAccount/${userId}`, {
+        method: 'DELETE',
+      });
+      const data = await response.json();
+      if (response.ok) {
+        set({ user: null, isAuthenticated: false });
+        window.location.href = '/login';
+      }
+    } catch (_error) {
+      console.error("Error deleting account:", _error);
+    }
+  }
 }));

@@ -25,7 +25,7 @@ export const useFileSystemStore = create<FileSystemState>((set, get) => ({
     const res = await fetch('/api/explorer', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json', // <--- ASTA LIPSESSTE CEL MAI PROBABIL
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ name, type, parentId }),
     });
@@ -75,9 +75,9 @@ export const useFileSystemStore = create<FileSystemState>((set, get) => ({
     });
     if (res.ok) {
 
-        set((state) => ({
-            items: state.items.map(item => item.id === id ? { ...item, content } : item)
-        }));
+      set((state) => ({
+        items: state.items.map(item => item.id === id ? { ...item, content } : item)
+      }));
     }
   },
 }));

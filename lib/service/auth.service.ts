@@ -39,6 +39,11 @@ export const AuthService = {
         }
         const userData={id: user.id, email: user.email, operatorName: user.profile?.operatorName};
         return userData;
-    }
+    },
+    deleteUser: async (userId: string) => {
+    return await prisma.user.delete({
+      where: { id: userId },
+    });
+  },
 
 };

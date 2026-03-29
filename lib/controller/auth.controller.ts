@@ -97,4 +97,17 @@ export const AuthController = {
       return NextResponse.json({ error: "SESSION_ERROR" }, { status: 500 });
     }
   },
+  deleteAccount: async (userId: string) => {
+    try {
+      await AuthService.deleteUser(userId);
+      await JWTUtils.removeAuthCookie();
+      return NextResponse.json({ message: "ACCOUNT_DELETED" }, { status: 200 });
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      return NextResponse.json(
+        { error: "Failed to delete account" },
+        { status: 500 },
+      );
+    }
+  }
 };
