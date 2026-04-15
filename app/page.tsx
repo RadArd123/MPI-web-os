@@ -1,19 +1,25 @@
 'use client';
 
-import { useState } from 'react';
-import { 
-  Terminal, 
-  Gamepad2, 
-  Settings, 
-  FolderClosed, 
-  ChevronLeft, 
-  ChevronRight, 
-  Activity, 
-  Cpu, 
-  Database 
+import {
+  Terminal,
+  Gamepad2,
+  Settings,
+  FolderClosed,
+  Activity
 } from 'lucide-react';
 import SpaceBackground from '@/components/SpaceBackground';
+import Sidebar from '@/components/Sidebar';
 import { useAuthStore } from '@/store/authStore';
+import Window from '@/components/Window';
+import { useWindowStore } from '@/store/windowStore';
+import CaptainsLog from '@/components/CaptainsLog';
+import Arcade from '@/components/Arcade';
+import { Explorer } from '@/components/Explorer';
+import { SystemMonitor } from '@/components/SystemMonitor';
+import SettingsPanel from '@/components/SettingsPanel';
+
+
+
 
 
 const desktopApps = [
@@ -25,87 +31,25 @@ const desktopApps = [
 ];
 
 export default function WebOSDesktop() {
-
-  const {logout} = useAuthStore();
-
-  const handleLogout = () => {
-    logout();
-  };
-  
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const { logout } = useAuthStore();
+  const { windows, openWindow, closeWindow, focusWindow, toggleMinimize, toggleMaximize } = useWindowStore();
 
   return (
-    // Containerul principal care ține tot ecranul
+
     <div className="flex h-screen w-screen bg-[#020202] text-gray-300 font-mono overflow-hidden selection:bg-cyan-900 relative">
-      
-      {/* Background animat/sci-fi */}
+
       <SpaceBackground />
 
-      {/* --- SIDEBAR RETRACTABIL --- */}
-      <aside 
-        className={`relative z-10 flex flex-col bg-black/60 backdrop-blur-xl border-r border-gray-800 transition-all duration-300 ease-in-out ${
-          isSidebarOpen ? 'w-64' : 'w-16'
-        }`}
-      >
-        {/* Header Sidebar + Buton de Toggle */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-gray-800">
-          {isSidebarOpen && (
-            <div className="flex items-center gap-2 overflow-hidden">
-              <div className="w-6 h-6 rounded border border-cyan-500/50 flex items-center justify-center bg-cyan-500/10 text-cyan-400 font-bold text-xs">
-                R
-              </div>
-              <span className="text-sm font-bold tracking-widest text-white whitespace-nowrap">STELLAR.OS</span>
-            </div>
-          )}
-          
-          <button 
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="p-1.5 rounded bg-gray-900 border border-gray-700 hover:bg-gray-800 text-gray-400 hover:text-white transition-colors absolute right-[-14px] top-5 z-20 shadow-lg"
-          >
-            {isSidebarOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
-          </button>
-        </div>
 
-        {/* Meniu Sidebar */}
-        <div className="flex-1 py-6 flex flex-col gap-2 px-3 overflow-hidden">
-          {/* Item 1 */}
-          <button className="flex items-center gap-3 p-2 rounded hover:bg-gray-900/80 transition-colors w-full group">
-            <Cpu size={20} className="text-gray-500 group-hover:text-cyan-400 min-w-[20px]" />
-            {isSidebarOpen && <span className="text-xs tracking-wide text-gray-400 group-hover:text-white whitespace-nowrap">Core Processing</span>}
-          </button>
-          {/* Item 2 */}
-          <button className="flex items-center gap-3 p-2 rounded hover:bg-gray-900/80 transition-colors w-full group">
-            <Database size={20} className="text-gray-500 group-hover:text-cyan-400 min-w-[20px]" />
-            {isSidebarOpen && <span className="text-xs tracking-wide text-gray-400 group-hover:text-white whitespace-nowrap">Data Uplink</span>}
-          </button>
-        </div>
-        <div className="p-4 border-t border-gray-800 cursor-pointer hover:bg-gray-900/80 transition-colors text-center" onClick={handleLogout}>
-          <p className="text-sm text-gray-400 group-hover:text-white">Log out</p>
-        </div>
+      <Sidebar onLogout={logout} />
 
-        {/* Footer Sidebar (Status) */}
-        <div className="p-4 border-t border-gray-800 flex items-center justify-center">
-           {isSidebarOpen ? (
-             <div className="flex items-center gap-2 text-xs text-gray-500 font-bold tracking-widest w-full justify-between">
-               <span>SYS.STATUS</span>
-               <div className="flex items-center gap-1"><span className="text-green-500">ONLINE</span><div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div></div>
-             </div>
-           ) : (
-             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-           )}
-        </div>
-      </aside>
-
-      {/* --- DESKTOP AREA --- */}
       <main className="flex-1 relative z-10 p-8">
-        
-        {/* Grid-ul de iconițe de pe Desktop */}
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6">
           {desktopApps.map((app) => (
-            <div 
-              key={app.id} 
+            <div
+              key={app.id}
               className="flex flex-col items-center gap-3 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-all group border border-transparent hover:border-gray-800"
-              onClick={() => console.log(`Ai dat click pe ${app.name}`)}
+              onClick={() => openWindow(app.id, app.name)}
             >
               <div className={`p-4 rounded-2xl bg-black/40 border border-gray-800 shadow-lg group-hover:-translate-y-1 transition-transform duration-200 ${app.color}`}>
                 <app.icon size={32} strokeWidth={1.5} />
@@ -116,10 +60,31 @@ export default function WebOSDesktop() {
             </div>
           ))}
         </div>
+        {windows.map((win) => (
+          < Window
+            key={win.id}
+            id={win.id}
+            title={win.title}
+            zIndex={win.zIndex}
+            isMaximized={win.isMaximized}
+            isMinimized={win.isMinimized}
+            onClose={() => closeWindow(win.id)}
+            onFocus={() => focusWindow(win.id)}
+            onMinimized={() => toggleMinimize(win.id)}
+            onMaximized={() => toggleMaximize(win.id)}
 
+
+          >
+
+            {win.id === 'captains-log' && <CaptainsLog />}
+            {win.id === 'arcade' && <Arcade />}
+            {win.id === 'files' && <Explorer />}
+            {win.id === 'monitor' && <SystemMonitor />}
+            {win.id === 'settings' && <SettingsPanel />}
+          </Window>
+        ))}
       </main>
 
     </div>
   );
 }
-

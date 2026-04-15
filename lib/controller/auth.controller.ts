@@ -19,6 +19,7 @@ export const AuthController = {
       const user = await AuthService.createUser(email, password, operatorName);
 
       const token = await JWTUtils.generateToken({
+        id: user.id,
         email: user.email,
         name: operatorName,
       });
@@ -51,6 +52,7 @@ export const AuthController = {
       }
 
       const token = await JWTUtils.generateToken({
+        id: userData.id,
         email: userData.email,
         name: userData.operatorName,
       });
@@ -75,7 +77,7 @@ export const AuthController = {
       return NextResponse.json({ error: "Failed to logout" }, { status: 500 });
     }
   },
-  getSession: async (req: Request) => {
+  getSession: async (_req: Request) => {
     try {
       const cookieStore = await cookies();
       const token = cookieStore.get("stellar_session")?.value;
@@ -91,8 +93,21 @@ export const AuthController = {
       }
 
       return NextResponse.json({ user: payload }, { status: 200 });
-    } catch (error) {
+    } catch (_error) {
       return NextResponse.json({ error: "SESSION_ERROR" }, { status: 500 });
     }
   },
+  deleteAccount: async (userId: string) => {
+    try {
+      await AuthService.deleteUser(userId);
+      await JWTUtils.removeAuthCookie();
+      return NextResponse.json({ message: "ACCOUNT_DELETED" }, { status: 200 });
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      return NextResponse.json(
+        { error: "Failed to delete account" },
+        { status: 500 },
+      );
+    }
+  }
 };

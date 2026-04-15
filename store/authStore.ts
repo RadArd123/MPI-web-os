@@ -1,7 +1,5 @@
 import { create } from "zustand";
 import type {
-  AuthSession,
-  User,
   AuthState,
   LoginCredentials,
   SignupCredentials,
@@ -25,7 +23,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       } else {
         set({ user: null, isAuthenticated: false, isLoading: false });
       }
-    } catch (error) {
+    } catch (_error) {
       set({ user: null, isAuthenticated: false, isLoading: false });
     }
   },
@@ -41,11 +39,11 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       if (response.ok) {
         set({ user: data.user, isAuthenticated: true });
-        return { success: true };
+       return { success: true, user: data.user };
       }
 
       return { success: false, error: data.error || "ACCESS_DENIED" };
-    } catch (error) {
+    } catch (_error) {
       return { success: false, error: "SYSTEM_FAILURE_CONNECTION_LOST" };
     }
   },
@@ -66,7 +64,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       }
 
       return { success: false, error: data.error || "INITIALIZATION_FAILED" };
-    } catch (error) {
+    } catch (_error) {
       return { success: false, error: "CORE_PROCESS_FAILURE" };
     }
   },
@@ -76,8 +74,22 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ user: null, isAuthenticated: false });
 
       window.location.href = '/login';
-    } catch (error) {
+    } catch (_error) {
       console.error("LOGOUT_SEQUENCE_INTERRUPTED");
     }
   },
+   deleteAccount: async (userId: string) => {  
+    try {
+      const response = await fetch(`/api/auth/deleteAccount/${userId}`, {
+        method: 'DELETE',
+      });
+      const data = await response.json();
+      if (response.ok) {
+        set({ user: null, isAuthenticated: false });
+        window.location.href = '/login';
+      }
+    } catch (_error) {
+      console.error("Error deleting account:", _error);
+    }
+  }
 }));

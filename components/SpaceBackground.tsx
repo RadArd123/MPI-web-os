@@ -48,7 +48,7 @@ export default function SpaceBackground() {
       active: false,
     };
 
-    let timeoutId: NodeJS.Timeout;
+
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -80,13 +80,13 @@ export default function SpaceBackground() {
       const isGoingRight = Math.random() > 0.5;
 
       if (isGoingRight) {
-        // Vine din STÂNGA spre DREAPTA
+
         shootingStar.x = -50;
-        shootingStar.dx = 9 + Math.random() * 10; // Pozitiv (merge spre dreapta)
+        shootingStar.dx = 9 + Math.random() * 10;
       } else {
-        // Vine din DREAPTA spre STÂNGA
+
         shootingStar.x = canvas.width + 50;
-        shootingStar.dx = -(9 + Math.random() * 10); // Negativ (merge spre stânga)
+        shootingStar.dx = -(9 + Math.random() * 10);
       }
 
       shootingStar.y = Math.random() * (canvas.height * 0.3);
@@ -94,7 +94,7 @@ export default function SpaceBackground() {
       shootingStar.size = 4 + Math.random() * 2;
       shootingStar.active = true;
 
-      timeoutId = setTimeout(spawnShootingStar, 3000 + Math.random() * 3000);
+      setTimeout(spawnShootingStar, 3000 + Math.random() * 3000);
     };
     setTimeout(spawnShootingStar, 2000);
 
@@ -183,9 +183,9 @@ export default function SpaceBackground() {
   }, []);
 
   return (
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 block pointer-events-none"
-      />
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 block pointer-events-none"
+    />
   );
 }
