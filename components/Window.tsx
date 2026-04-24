@@ -2,13 +2,25 @@
 
 import { X, Minus, Maximize2, Terminal, Minimize2 } from 'lucide-react';
 import type { WindowProps } from '@/types/window.types';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Draggable } from './Draggable';
 
 export default function Window({ title, zIndex, children, isMaximized, isMinimized, onClose, onFocus, onMinimized, onMaximized }: WindowProps) {
 
-const [savedPos, setSavedPos] = useState({ x: 100, y: 100 });
+  const [savedPos, setSavedPos] = useState({ x: 20, y: 20 });
   const windowRef = useRef<HTMLDivElement>(null);
+
+  // Initialize position to better fit mobile on mount, if desired
+  useEffect(() => {
+    // requestAnimationFrame avoids calling setState synchronously in the effect
+    requestAnimationFrame(() => {
+      if (typeof window !== 'undefined' && window.innerWidth < 768) {
+        setSavedPos({ x: 10, y: 10 });
+      } else {
+        setSavedPos({ x: 50 + Math.random() * 50, y: 50 + Math.random() * 50 }); // slight stagger
+      }
+    });
+  }, []);
 
   if (isMinimized) return null;
 
@@ -34,7 +46,7 @@ const [savedPos, setSavedPos] = useState({ x: 100, y: 100 });
         animate-in zoom-in-95 duration-200 ring-1 ring-white/5 
         ${isMaximized
           ? 'w-full h-full rounded-none border-none' 
-          : 'w-[800px] h-[600px] rounded-lg' 
+          : 'w-[95vw] sm:w-[500px] md:w-[700px] lg:w-[800px] max-w-full h-[80vh] md:h-[600px] rounded-lg' 
         }
       `}>
         <Draggable 

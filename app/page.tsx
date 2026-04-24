@@ -5,7 +5,8 @@ import {
   Gamepad2,
   Settings,
   FolderClosed,
-  Activity
+  Activity,
+  Earth
 } from 'lucide-react';
 import SpaceBackground from '@/components/SpaceBackground';
 import Sidebar from '@/components/Sidebar';
@@ -17,6 +18,8 @@ import Arcade from '@/components/Arcade';
 import { Explorer } from '@/components/Explorer';
 import { SystemMonitor } from '@/components/SystemMonitor';
 import SettingsPanel from '@/components/SettingsPanel';
+import GeoTracker from '@/components/GeoTracker';
+import { useProfileStore } from '@/store/profileStore';
 
 
 
@@ -27,24 +30,26 @@ const desktopApps = [
   { id: 'arcade', name: 'Arcade_Module', icon: Gamepad2, color: 'text-purple-400' },
   { id: 'files', name: 'Stellar_Drive', icon: FolderClosed, color: 'text-yellow-400' },
   { id: 'monitor', name: 'Sys_Monitor', icon: Activity, color: 'text-green-400' },
+  { id: 'geotracker', name: 'Geo_Tracker', icon: Earth, color: 'text-blue-400' },
   { id: 'settings', name: 'Settings', icon: Settings, color: 'text-gray-400' },
 ];
 
 export default function WebOSDesktop() {
-  const { logout } = useAuthStore();
+  const { logout, user } = useAuthStore();
+  const { profile} = useProfileStore();
   const { windows, openWindow, closeWindow, focusWindow, toggleMinimize, toggleMaximize } = useWindowStore();
 
   return (
 
-    <div className="flex h-screen w-screen bg-[#020202] text-gray-300 font-mono overflow-hidden selection:bg-cyan-900 relative">
+    <div className="flex flex-col-reverse md:flex-row h-[100dvh] w-screen bg-[#020202] text-gray-300 font-mono overflow-hidden selection:bg-cyan-900 relative">
 
       <SpaceBackground />
 
 
-      <Sidebar onLogout={logout} />
+      <Sidebar onLogout={logout} name={profile?.operatorName || user?.name || user?.operatorName || 'User'} />
 
-      <main className="flex-1 relative z-10 p-8">
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6">
+      <main className="flex-1 relative z-10 p-4 md:p-8 overflow-y-auto">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 md:gap-6">
           {desktopApps.map((app) => (
             <div
               key={app.id}
@@ -80,6 +85,7 @@ export default function WebOSDesktop() {
             {win.id === 'arcade' && <Arcade />}
             {win.id === 'files' && <Explorer />}
             {win.id === 'monitor' && <SystemMonitor />}
+            {win.id === 'geotracker' && <GeoTracker />}
             {win.id === 'settings' && <SettingsPanel />}
           </Window>
         ))}
