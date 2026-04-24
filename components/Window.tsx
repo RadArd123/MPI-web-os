@@ -12,11 +12,14 @@ export default function Window({ title, zIndex, children, isMaximized, isMinimiz
 
   // Initialize position to better fit mobile on mount, if desired
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.innerWidth < 768) {
-      setSavedPos({ x: 10, y: 10 });
-    } else {
-      setSavedPos({ x: 50 + Math.random() * 50, y: 50 + Math.random() * 50 }); // slight stagger
-    }
+    // requestAnimationFrame avoids calling setState synchronously in the effect
+    requestAnimationFrame(() => {
+      if (typeof window !== 'undefined' && window.innerWidth < 768) {
+        setSavedPos({ x: 10, y: 10 });
+      } else {
+        setSavedPos({ x: 50 + Math.random() * 50, y: 50 + Math.random() * 50 }); // slight stagger
+      }
+    });
   }, []);
 
   if (isMinimized) return null;

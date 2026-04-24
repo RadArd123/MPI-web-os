@@ -46,7 +46,7 @@ export default function WebOSDesktop() {
       <SpaceBackground />
 
 
-      <Sidebar onLogout={logout} name={profile?.operatorName || (user as any)?.name || (user as any)?.operatorName || 'User'} />
+      <Sidebar onLogout={logout} name={profile?.operatorName || user?.name || user?.operatorName || 'User'} />
 
       <main className="flex-1 relative z-10 p-4 md:p-8 overflow-y-auto">
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 md:gap-6">

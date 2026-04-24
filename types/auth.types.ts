@@ -10,6 +10,8 @@ export interface OperatorProfile {
 export interface User {
   id: string;
   email: string;
+  name?: string;
+  operatorName?: string;
   profile?: OperatorProfile;
 }
 

@@ -2,6 +2,7 @@
 
 import SpaceGlob from "./SpaceGlob";
 import { useState } from "react";
+/* eslint-disable @next/next/no-img-element */
 
 interface NasaApodResponse {
   date: string;
@@ -17,7 +18,7 @@ const GeoTracker = () => {
     const [date, setDate] = useState('');
     const [nasaData, setNasaData] = useState<NasaApodResponse | null>(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<any>(null);
+    const [error, setError] = useState<string | null>(null);
 
     const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -33,8 +34,8 @@ const GeoTracker = () => {
             
             const data = await response.json();
             setNasaData(data);
-        } catch (err: any) {
-            setError(err.message || 'An error occurred.');
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : 'An error occurred.');
         } finally {
             setLoading(false);
         }

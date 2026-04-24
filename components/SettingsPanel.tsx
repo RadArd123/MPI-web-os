@@ -23,7 +23,6 @@ export default function Settings() {
     if (profile) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setName(profile.operatorName || "");
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setThemeColor(profile.themeColor || "");
     }
   }, [profile]);
