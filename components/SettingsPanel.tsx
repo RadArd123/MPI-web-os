@@ -77,27 +77,6 @@ export default function Settings() {
             UPDATE
           </button>
         </div>
-
-        {/* Theme Color Field */}
-        <div className="p-4 rounded-lg border border-white/10 bg-white/5 flex items-center gap-4 transition-all focus-within:border-purple-500/50">
-          <Palette size={20} className="text-purple-400" />
-          <div className="flex flex-col flex-1">
-            <label className="text-[10px] text-zinc-500 uppercase font-bold">Theme Color</label>
-            <input
-              type="color"
-              className="text-sm text-purple-300 bg-transparent border-none focus:outline-none font-mono"
-              value={themeColor}
-              onChange={(e) => setThemeColor(e.target.value)}
-            />
-          </div>
-          <button
-            onClick={handleUpdate}
-            disabled={isLoading}
-            className="px-4 py-2 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 rounded border border-purple-500/40 text-[10px] font-bold transition-all disabled:opacity-50"
-          >
-            UPDATE
-          </button>
-        </div>
       </div>
 
       {/* Danger Zone */}
