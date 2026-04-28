@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useSnippetStore } from '@/store/snippetStore';
 
-// Mock global fetch
+
 const mockFetch = vi.fn();
 globalThis.fetch = mockFetch;
 
@@ -91,7 +91,7 @@ describe('useSnippetStore', () => {
 
       const snippets = useSnippetStore.getState().snippets;
       expect(snippets).toHaveLength(2);
-      expect(snippets[0].id).toBe('2'); // new one is first
+      expect(snippets[0].id).toBe('2');
       expect(snippets[1].id).toBe('1');
     });
 

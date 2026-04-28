@@ -31,7 +31,7 @@ export default function CaptainsLog() {
   };
 
   return (
-    <div className="flex flex-col h-full gap-4 text-cyan-50 text-sm relative">
+    <div className="flex flex-col h-full gap-4 text-zinc-100 text-sm relative">
  
       <div className="bg-white/5 p-4 rounded-lg border border-white/10 flex flex-col gap-3">
         <input 
@@ -39,17 +39,17 @@ export default function CaptainsLog() {
           placeholder="Snippet Title..." 
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="bg-transparent border-b border-white/10 py-1 focus:outline-none focus:border-cyan-500 transition-colors"
+          className="bg-transparent border-b border-white/10 py-1 focus:outline-none focus:border-white/40 transition-colors"
         />
         <textarea 
           placeholder="Type your stellar code here..."
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          className="bg-black/40 p-2 rounded h-32 font-mono text-xs focus:outline-none focus:ring-1 focus:ring-cyan-500/50"
+          className="bg-black/40 p-2 rounded h-32 font-mono text-xs focus:outline-none focus:ring-1 focus:ring-white/40"
         />
         <button 
           onClick={handleSave}
-          className="flex items-center justify-center gap-2 bg-cyan-600 hover:bg-cyan-500 text-white py-2 rounded transition-all font-bold uppercase tracking-tighter text-[10px]"
+          className="flex items-center justify-center gap-2 bg-white hover:bg-zinc-200 text-black py-2 rounded transition-all font-bold uppercase tracking-tighter text-[10px]"
         >
           <Save size={14} /> Encrypt & Save to Neon
         </button>
@@ -62,10 +62,10 @@ export default function CaptainsLog() {
             <div 
               key={s.id} 
               onClick={() => setSelectedSnippet(s)} 
-              className="group bg-white/5 p-3 rounded border border-white/5 hover:border-cyan-500/30 transition-all flex justify-between items-start cursor-pointer"
+              className="group bg-white/5 p-3 rounded border border-white/5 hover:border-white/30 transition-all flex justify-between items-start cursor-pointer"
             >
               <div className="flex-1">
-                <p className="font-bold text-cyan-400 text-xs">{s.title}</p>
+                <p className="font-bold text-zinc-200 text-xs">{s.title}</p>
                 <code className="text-[10px] text-zinc-400 line-clamp-1">{s.code}</code>
               </div>
               <button 
@@ -84,10 +84,10 @@ export default function CaptainsLog() {
 
       {selectedSnippet && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 ">
-          <div className="bg-zinc-900 border border-cyan-500/30 w-full max-w-2xl max-h-[80vh] rounded-lg shadow-2xl flex flex-col">
+          <div className="bg-zinc-900 border border-white/20 w-full max-w-2xl max-h-[80vh] rounded-lg shadow-2xl flex flex-col">
           
             <div className="p-4 border-b border-white/10 flex justify-between items-center bg-white/5">
-              <h2 className="text-cyan-400 font-bold uppercase tracking-widest text-xs">{selectedSnippet.title}</h2>
+              <h2 className="text-zinc-100 font-bold uppercase tracking-widest text-xs">{selectedSnippet.title}</h2>
               <button 
                 onClick={() => setSelectedSnippet(null)}
                 className="text-zinc-400 hover:text-white transition-colors"
@@ -109,7 +109,7 @@ export default function CaptainsLog() {
                    navigator.clipboard.writeText(selectedSnippet.code);
                  
                 }}
-                className="flex items-center gap-2 text-[10px] uppercase font-bold text-cyan-500 hover:text-cyan-400 transition-colors"
+                className="flex items-center gap-2 text-[10px] uppercase font-bold text-zinc-300 hover:text-zinc-100 transition-colors"
               >
                 <Copy size={12} /> Copy Code
               </button>

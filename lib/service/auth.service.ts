@@ -13,7 +13,7 @@ export const AuthService = {
             profile: {
                 create: {
                     operatorName,
-                    themeColor: "cyan",
+                    themeColor: "mono",
                 }
             }
         },

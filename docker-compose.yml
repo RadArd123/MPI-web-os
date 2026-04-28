@@ -1,6 +1,17 @@
 version: '3.8'
 
 services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: webos
+      POSTGRES_PASSWORD: webos_secret
+      POSTGRES_DB: webos_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
   stellar-os:
     build:
       context: .
@@ -10,4 +21,9 @@ services:
       - "3000:3000"
     env_file:
       - .env
+    depends_on:
+      - db
     restart: always
+
+volumes:
+  db_data:

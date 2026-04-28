@@ -62,7 +62,7 @@ export const Explorer = () => {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setEditingFile(null)}
-                className="p-1.5 hover:bg-white/10 rounded-md text-cyan-400 transition-colors"
+                className="p-1.5 hover:bg-white/10 rounded-md text-zinc-300 transition-colors"
                 title="Înapoi"
               >
                 <ChevronLeft size={18} />
@@ -76,7 +76,7 @@ export const Explorer = () => {
             </div>
             <button
               onClick={handleSaveContent}
-              className="px-3 py-1 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 rounded border border-cyan-500/50 text-xs transition-colors tracking-widest"
+              className="px-3 py-1 bg-white/10 hover:bg-white/20 text-zinc-100 rounded border border-white/30 text-xs transition-colors tracking-widest"
             >
               SALVEAZĂ
             </button>
@@ -87,7 +87,7 @@ export const Explorer = () => {
               {currentFolderId && (
                 <button
                   onClick={() => setCurrentFolder(null)} // Reset la root
-                  className="p-1.5 hover:bg-white/10 rounded-md text-cyan-400 transition-colors"
+                  className="p-1.5 hover:bg-white/10 rounded-md text-zinc-300 transition-colors"
                   title="Înapoi la Root"
                 >
                   <ChevronLeft size={18} />
@@ -107,11 +107,11 @@ export const Explorer = () => {
                 value={newItemName}
                 onChange={(e) => setNewItemName(e.target.value)}
                 placeholder="Nume..."
-                className="bg-black border border-white/10 rounded px-2 py-1 text-xs focus:outline-none focus:border-cyan-500/50 w-32"
+                className="bg-black border border-white/10 rounded px-2 py-1 text-xs focus:outline-none focus:border-white/40 w-32"
               />
               <button
                 onClick={() => handleCreate('FOLDER')}
-                className="p-1.5 hover:bg-cyan-500/20 hover:text-cyan-400 rounded border border-white/10 transition-all"
+                className="p-1.5 hover:bg-white/10 hover:text-zinc-200 rounded border border-white/10 transition-all"
                 title="Folder Nou"
               >
                 <Folder size={16} />
@@ -133,7 +133,7 @@ export const Explorer = () => {
           <textarea
             value={editingFile.content}
             onChange={(e) => setEditingFile({ ...editingFile, content: e.target.value })}
-            className="w-full h-full bg-black/50 text-emerald-400 font-mono text-sm p-4 border border-white/10 rounded-xl focus:outline-none focus:border-cyan-500/30 resize-none transition-colors"
+            className="w-full h-full bg-black/50 text-zinc-200 font-mono text-sm p-4 border border-white/10 rounded-xl focus:outline-none focus:border-white/40 resize-none transition-colors"
             placeholder="// Introducere date..."
             spellCheck={false}
           />
@@ -170,7 +170,7 @@ export const Explorer = () => {
                 >
                   <td className="py-2 flex items-center gap-3">
                     {item.type === 'FOLDER' ? (
-                      <Folder size={16} className="text-cyan-400" />
+                      <Folder size={16} className="text-zinc-300" />
                     ) : (
                       <File size={16} className="text-purple-400" />
                     )}
@@ -185,7 +185,7 @@ export const Explorer = () => {
                     <div className="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button
                         onClick={() => handleRename(item.id, item.name)}
-                        className="p-1 hover:text-cyan-400 text-zinc-600"
+                        className="p-1 hover:text-zinc-200 text-zinc-600"
                       >
                         <Edit3 size={14} />
                       </button>

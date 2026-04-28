@@ -105,10 +105,9 @@ function MemoryChart({ data }: { data: number[] }) {
 
     ctx.lineTo(w, h);
     ctx.lineTo(0, h);
-    const grad = ctx.createLinearGradient(0, 0, 0, h);
-    grad.addColorStop(0, 'rgba(6, 182, 212, 0.15)');
-    grad.addColorStop(1, 'rgba(6, 182, 212, 0)');
-    ctx.fillStyle = grad;
+   const grad = ctx.createLinearGradient(0, 0, 0, h);
+  grad.addColorStop(0, 'rgba(16, 185, 129, 0.25)');
+  grad.addColorStop(1, 'rgba(16, 185, 129, 0)');
     ctx.fill();
   }, [data]);
 
@@ -147,14 +146,14 @@ export function SystemMonitor() {
         <div className="flex justify-between items-end">
           <div className="space-y-1">
             <div className="text-[10px] text-zinc-500 uppercase tracking-widest">Memory Uplink</div>
-            <div className="text-sm font-bold text-cyan-400">{stats.ramUsed} MB <span className="text-zinc-600 font-normal">/ {stats.ramLimit} MB</span></div>
+            <div className="text-sm font-bold text-emerald-400">{stats.ramUsed} MB <span className="text-zinc-600 font-normal">/ {stats.ramLimit} MB</span></div>
           </div>
-          <div className="text-[9px] text-cyan-500/40 animate-pulse tracking-tighter italic">LIVE_FEED_STABLE</div>
+          <div className="text-[9px] text-emerald-500/40 animate-pulse tracking-tighter italic">LIVE_FEED_STABLE</div>
         </div>
 
         <div className="h-1 w-full bg-zinc-800 rounded-full overflow-hidden">
           <div
-            className="h-full bg-cyan-500 shadow-[0_0_10px_#06b6d4] transition-all duration-500"
+            className="h-full bg-emerald-500 shadow-[0_0_10px_#10b981] transition-all duration-500"
             style={{ width: `${Math.min(ramPercentage, 100)}%` }}
           />
         </div>
@@ -169,7 +168,7 @@ export function SystemMonitor() {
 
           <div className="flex items-center justify-between p-2 rounded bg-zinc-900/40 border border-white/5">
             <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <div>
                 <div className="text-sm font-bold text-zinc-200">Web OS Core</div>
                 <div className="text-[10px] text-zinc-500">System</div>
