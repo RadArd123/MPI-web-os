@@ -6,7 +6,8 @@ import {
   Settings,
   FolderClosed,
   Activity,
-  Earth
+  Earth,
+  FolderKanban
 } from 'lucide-react';
 import SpaceBackground from '@/components/SpaceBackground';
 import Sidebar from '@/components/Sidebar';
@@ -20,6 +21,7 @@ import { SystemMonitor } from '@/components/SystemMonitor';
 import SettingsPanel from '@/components/SettingsPanel';
 import GeoTracker from '@/components/GeoTracker';
 import { useProfileStore } from '@/store/profileStore';
+import ProjectExplorer from '@/components/ProjectExplorer';
 
 
 
@@ -31,6 +33,7 @@ const desktopApps = [
   { id: 'files', name: 'Stellar_Drive', icon: FolderClosed, color: 'text-yellow-400' },
   { id: 'monitor', name: 'Sys_Monitor', icon: Activity, color: 'text-green-400' },
   { id: 'geotracker', name: 'Geo_Tracker', icon: Earth, color: 'text-blue-400' },
+  { id: 'portfolio', name: 'Portfolio', icon: FolderKanban, color: 'text-gray-400' },
   { id: 'settings', name: 'Settings', icon: Settings, color: 'text-gray-400' },
 ];
 
@@ -41,7 +44,7 @@ export default function WebOSDesktop() {
 
   return (
 
-    <div className="flex flex-col-reverse md:flex-row h-[100dvh] w-screen bg-[#020202] text-gray-300 font-mono overflow-hidden selection:bg-cyan-900 relative">
+    <div className="flex h-dvh w-screen flex-col-reverse overflow-hidden bg-[#020202] font-mono text-gray-300 selection:bg-zinc-700 md:flex-row relative">
 
       <SpaceBackground />
 
@@ -87,6 +90,7 @@ export default function WebOSDesktop() {
             {win.id === 'monitor' && <SystemMonitor />}
             {win.id === 'geotracker' && <GeoTracker />}
             {win.id === 'settings' && <SettingsPanel />}
+            {win.id === 'portfolio' && <ProjectExplorer />}
           </Window>
         ))}
       </main>

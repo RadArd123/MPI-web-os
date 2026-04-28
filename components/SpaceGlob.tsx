@@ -20,7 +20,7 @@ const initialUsers: ActiveUser[] = [
     lat: 45.6,
     lng: 25.6, // Default location
     size: 0.5,
-    color: "#22d3ee",
+    color: "#e5e7eb",
     name: "You: Waiting for location...",
   },
   {
@@ -107,7 +107,7 @@ export default function SpaceGlobe() {
             lat: latitude,
             lng: longitude,
             size: 0.5,
-            color: "#22d3ee", // Keep your color (cyan)
+            color: "#e5e7eb",
             name: "You: Location Found!",
           }
         ]);
@@ -152,7 +152,7 @@ export default function SpaceGlobe() {
         labelColor={(d) => (d as ActiveUser).color}
         labelResolution={2}
         showAtmosphere={true}
-        atmosphereColor="#0ea5e9"
+        atmosphereColor="#a1a1aa"
         atmosphereAltitude={0.15}
       />
 
@@ -160,12 +160,12 @@ export default function SpaceGlobe() {
       <button
         onClick={handleFindMe}
         disabled={isLocating}
-        className="absolute top-4 right-4 px-4 py-2 bg-slate-900/80 hover:bg-slate-800 text-cyan-400 text-sm font-semibold border border-cyan-500/30 rounded-lg shadow-[0_0_15px_rgba(34,211,238,0.2)] transition-all backdrop-blur-md disabled:opacity-50 disabled:cursor-not-allowed z-10"
+        className="absolute top-4 right-4 px-4 py-2 bg-slate-900/80 hover:bg-slate-800 text-zinc-100 text-sm font-semibold border border-white/30 rounded-lg shadow-[0_0_15px_rgba(255,255,255,0.25)] transition-all backdrop-blur-md disabled:opacity-50 disabled:cursor-not-allowed z-10"
       >
         {isLocating ? "Scanning satellite..." : "📍 Locate me"}
       </button>
 
-      <div className="absolute bottom-4 left-4 p-2 bg-black/60 backdrop-blur-md rounded-lg border border-white/10 text-[10px] text-cyan-500 uppercase tracking-widest pointer-events-none">
+      <div className="absolute bottom-4 left-4 p-2 bg-black/60 backdrop-blur-md rounded-lg border border-white/10 text-[10px] text-zinc-300 uppercase tracking-widest pointer-events-none">
         Live Tracking: {users.length} Entities
       </div>
     </div>

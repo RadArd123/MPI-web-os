@@ -24,12 +24,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.5.0
- * Query Engine version: 280c870be64f457428992c43c1f6d557fab6e29e
+ * Prisma Client JS version: 7.8.0
+ * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
  */
 Prisma.prismaVersion = {
-  client: "7.5.0",
-  engine: "280c870be64f457428992c43c1f6d557fab6e29e"
+  client: "7.8.0",
+  engine: "3c6e192761c0362d496ed980de936e2f3cebcd3a"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -153,6 +153,17 @@ exports.Prisma.FileSystemItemScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ProjectScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  link: 'link',
+  userId: 'userId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -172,11 +183,17 @@ exports.ItemType = exports.$Enums.ItemType = {
   FOLDER: 'FOLDER'
 };
 
+exports.ProjectStatus = exports.$Enums.ProjectStatus = {
+  IN_PROGRESS: 'IN_PROGRESS',
+  FINISHED: 'FINISHED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Profile: 'Profile',
   Snippet: 'Snippet',
-  FileSystemItem: 'FileSystemItem'
+  FileSystemItem: 'FileSystemItem',
+  Project: 'Project'
 };
 
 /**

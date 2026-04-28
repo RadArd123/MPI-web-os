@@ -17,12 +17,13 @@ model User {
   profile   Profile?  
   snippets  Snippet[]  
   files FileSystemItem[]
+  projects  Project[]
 }
 
 model Profile {
   id           String @id @default(cuid())
   operatorName String @unique           
-  themeColor   String @default("cyan")  
+  themeColor   String @default("mono")  
 
   userId       String @unique
   user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -58,8 +59,23 @@ model FileSystemItem {
 
   @@index([parentId]) 
 }
+model Project{
+  id String @id @default(uuid())
+  name String
+  description String
+  link String
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status ProjectStatus
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
 enum ItemType {
   FILE
   FOLDER
+}
+enum ProjectStatus {
+  IN_PROGRESS
+  FINISHED
 }

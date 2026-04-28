@@ -35,7 +35,7 @@ export default function Sidebar({ onLogout, name }: { onLogout: () => void; name
 
       <div className={`h-16 flex items-center justify-between px-4 border-b border-gray-800 shrink-0 relative w-full`}>
         <div className="flex items-center gap-3 overflow-hidden w-full">
-          <div className="w-8 h-8 px-6 rounded border border-cyan-500/50 flex items-center justify-center bg-cyan-500/10 text-cyan-400 font-bold text-[12px] shrink-0">
+          <div className="w-8 h-8 px-6 rounded border border-white/30 flex items-center justify-center bg-white/5 text-zinc-200 font-bold text-[12px] shrink-0">
             {name}
           </div>
           <div className={`flex flex-col truncate`}>
@@ -77,13 +77,13 @@ export default function Sidebar({ onLogout, name }: { onLogout: () => void; name
                   ? focusWindow(win.id)
                   : toggleMinimize(win.id)
               }
-              className={`flex items-center gap-3 p-2.5 rounded transition-all group relative ${isActive ? "bg-cyan-500/10 text-cyan-400" : "hover:bg-white/5 text-zinc-500"}`}
+              className={`flex items-center gap-3 p-2.5 rounded transition-all group relative ${isActive ? "bg-white/10 text-zinc-100" : "hover:bg-white/5 text-zinc-500"}`}
               title={!isSidebarOpen ? win.title : ""}
             >
               <Icon
                 size={18}
                 className={
-                  isActive ? "text-cyan-400" : "group-hover:text-cyan-300"
+                  isActive ? "text-zinc-100" : "group-hover:text-zinc-300"
                 }
               />
               {isSidebarOpen && (
@@ -94,7 +94,7 @@ export default function Sidebar({ onLogout, name }: { onLogout: () => void; name
 
               {/* Status Dot */}
               <div
-                className={`absolute right-2 w-1 h-1 rounded-full ${win.isMinimized ? "bg-zinc-700" : "bg-cyan-500 shadow-[0_0_8px_cyan]"}`}
+                className={`absolute right-2 w-1 h-1 rounded-full ${win.isMinimized ? "bg-zinc-700" : "bg-white shadow-[0_0_8px_rgba(255,255,255,0.4)]"}`}
               />
             </button>
           );

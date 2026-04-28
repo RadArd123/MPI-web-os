@@ -52,11 +52,11 @@ const GeoTracker = () => {
                 background: rgba(15, 23, 42, 0.3);
             }
             .sci-fi-scroll::-webkit-scrollbar-thumb {
-                background: rgba(6, 182, 212, 0.3);
+                background: rgba(255, 255, 255, 0.2);
                 border-radius: 10px;
             }
             .sci-fi-scroll::-webkit-scrollbar-thumb:hover {
-                background: rgba(6, 182, 212, 0.8);
+                background: rgba(255, 255, 255, 0.45);
             }
         `}</style>
 
@@ -64,11 +64,11 @@ const GeoTracker = () => {
         <div className="h-full w-full p-4 md:p-6 lg:p-8 flex flex-col gap-8 overflow-y-auto overflow-x-hidden sci-fi-scroll">
             
             {/* UPPER SECTION: Large Globe Hero */}
-            <div className="w-full min-h-[45vh] lg:min-h-[55vh] flex items-center justify-center relative rounded-2xl border border-cyan-500/20 bg-slate-950/40  overflow-hidden">
+            <div className="w-full min-h-[45vh] lg:min-h-[55vh] flex items-center justify-center relative rounded-2xl border border-white/20 bg-slate-950/40  overflow-hidden">
                 <SpaceGlob />
                 
                 {/* Decorative element */}
-                <div className="absolute top-4 left-4 text-cyan-500/50 text-[10px] tracking-widest font-mono">
+                <div className="absolute top-4 left-4 text-zinc-500 text-[10px] tracking-widest font-mono">
                     SYS.ORBITAL_VIEW_ACTIVE //
                 </div>
             </div>
@@ -76,11 +76,11 @@ const GeoTracker = () => {
             {/* LOWER SECTION: Centered NASA Module */}
             <div className="flex justify-center w-full">
                 
-                <div className="w-full max-w-2xl flex flex-col gap-5 bg-slate-900/40 border border-cyan-500/20 rounded-2xl p-5 md:p-7 shadow-[0_0_20px_rgba(6,182,212,0.08)] backdrop-blur-md">
+                <div className="w-full max-w-2xl flex flex-col gap-5 bg-slate-900/40 border border-white/20 rounded-2xl p-5 md:p-7 shadow-[0_0_20px_rgba(255,255,255,0.08)] backdrop-blur-md">
                     
                     {/* Header */}
-                    <div className="border-b border-cyan-500/30 pb-3">
-                        <h2 className="text-cyan-400 text-sm font-bold tracking-widest uppercase font-mono">
+                    <div className="border-b border-white/20 pb-3">
+                        <h2 className="text-zinc-100 text-sm font-bold tracking-widest uppercase font-mono">
                             NASA APOD Archive
                         </h2>
                     </div>
@@ -88,7 +88,7 @@ const GeoTracker = () => {
                     {/* Form */}
                     <form onSubmit={handleSearch} className="flex gap-3 w-full">
                         <input 
-                            className="flex-1 bg-black/50 text-cyan-400 placeholder:text-cyan-700 border border-cyan-500/30 rounded-lg px-4 py-2.5 font-mono text-sm focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 transition-all"
+                            className="flex-1 bg-black/50 text-zinc-200 placeholder:text-zinc-600 border border-white/20 rounded-lg px-4 py-2.5 font-mono text-sm focus:outline-none focus:ring-1 focus:ring-white/40 focus:border-white/40 transition-all"
                             type="date"
                             value={date} 
                             min="1995-06-16"
@@ -99,19 +99,19 @@ const GeoTracker = () => {
                         <button 
                             type="submit"
                             disabled={loading}
-                            className="px-6 py-2.5 bg-cyan-950/50 text-cyan-400 border border-cyan-500/50 rounded-lg font-mono text-sm hover:bg-cyan-900/80 hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="px-6 py-2.5 bg-white/10 text-zinc-100 border border-white/30 rounded-lg font-mono text-sm hover:bg-white/20 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-all focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             INITIALIZE
                         </button>
                     </form>
 
 
-                    <div className="flex-1 flex flex-col items-center justify-center min-h-[280px] bg-black/40 border border-cyan-500/20 rounded-xl p-2 overflow-hidden relative">
+                    <div className="relative flex min-h-70 flex-1 flex-col items-center justify-center overflow-hidden rounded-xl border border-white/20 bg-black/40 p-2">
                   
-                        <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%] opacity-20 z-10"></div>
+                        <div className="absolute inset-0 z-10 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-size-[100%_4px,3px_100%] opacity-20"></div>
 
                         {loading && (
-                            <p className="text-cyan-500 animate-pulse font-mono text-sm z-20">CONNECTING TO SATELLITES...</p>
+                            <p className="text-zinc-300 animate-pulse font-mono text-sm z-20">CONNECTING TO SATELLITES...</p>
                         )}
                         {error && (
                             <p className="text-red-400 text-sm font-mono z-20">[ERROR]: {error}</p>
@@ -122,7 +122,7 @@ const GeoTracker = () => {
                                     <img 
                                         src={nasaData.url} 
                                         alt={nasaData.title} 
-                                        className="rounded-lg object-contain w-full max-h-[300px]" 
+                                        className="w-full max-h-75 rounded-lg object-contain"
                                     />
                                 ) : (
                                     <iframe 
@@ -132,11 +132,11 @@ const GeoTracker = () => {
                                         allowFullScreen
                                     />
                                 )}
-                                <p className="text-cyan-300 font-semibold text-xs md:text-sm text-center font-mono">{nasaData.title}</p>
+                                <p className="text-zinc-100 font-semibold text-xs md:text-sm text-center font-mono">{nasaData.title}</p>
                             </div>
                         )}
                         {!nasaData && !loading && !error && (
-                            <p className="text-cyan-800/60 text-sm text-center font-mono z-20">
+                            <p className="text-zinc-600 text-sm text-center font-mono z-20">
                                 AWAITING DATE SELECTION...
                             </p>
                         )}

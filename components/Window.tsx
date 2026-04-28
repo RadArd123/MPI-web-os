@@ -58,7 +58,7 @@ export default function Window({ title, zIndex, children, isMaximized, isMinimiz
           className="h-10 bg-zinc-900/80 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-4 select-none cursor-grab active:cursor-grabbing group"
         >
           <div className="flex items-center gap-3">
-            <Terminal size={14} className="text-cyan-400" />
+            <Terminal size={14} className="text-zinc-300" />
             <span className="text-[10px] font-bold text-zinc-400 tracking-[0.2em] uppercase">
               {title}
             </span>
@@ -97,7 +97,7 @@ export default function Window({ title, zIndex, children, isMaximized, isMinimiz
 
         <div className="h-6 bg-zinc-950 border-t border-white/5 px-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></div>
+            <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></div>
             <span className="text-[9px] text-zinc-600 font-bold uppercase tracking-tighter">Process: Active</span>
           </div>
           <span className="text-[9px] text-zinc-700 font-mono italic">Mem: 128MB_Uplink</span>
